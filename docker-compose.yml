@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  front:
+    image: ia_front
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+
+  analyser:
+    image: ia_analyser
+    build:
+      context: ./analyser
+      dockerfile: Dockerfile
+  
+
