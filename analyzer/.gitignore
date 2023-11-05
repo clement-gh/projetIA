@@ -1,0 +1,8 @@
+# ignore 
+__pycache__/
+/GroundingDino/
+
+/segmentAnything/
+
+/weights/
+/yolov7/
