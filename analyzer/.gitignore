@@ -6,3 +6,6 @@ __pycache__/
 
 /weights/
 /yolov7/
+
+# logs
+*.log
