@@ -5,17 +5,9 @@ import numpy as np
 from const import *
 import supervision as sv
 
-from groundingdino.util.inference import load_model, load_image, predict, annotate, Model
-import cv2
-import matplotlib.pyplot as plt
-import numpy as np
-from const import *
-import supervision as sv
+### TODO: delete theses constants
 img_path = 'assets/61.jpg'
 text_prompt = ['cap', 'shirt', 'sunglasses', 'shoe', 'sock', 'backpack', 'sticks', 'bib', 'trousers']
-
-
-
 
 
 
@@ -36,7 +28,7 @@ def detect_with_dino (image_path, text_prompt, box_threshold=0.3, text_threshold
     box_annotator = sv.BoxAnnotator()
     annotated_image = box_annotator.annotate(scene=image.copy(), detections=detections)
 
-    return annotated_image, detections
+    return annotated_image, detections, phrases
 
 """
 annotated_frame, detections = detect_with_dino(img_path, text_prompt)
