@@ -4,6 +4,7 @@ import subprocess
 import torch
 import supervision as sv
 import wget
+from const import *
 
 def script_setup():
     
@@ -12,74 +13,41 @@ def script_setup():
     url_yolo_best = "https://github.com/clement-gh/4A-Internship/raw/main/best.pt"
     url_yolo='https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7.pt'
     download()
-    import_weights(url_dino, url_sam, url_yolo_best)
+    #import_weights(url_dino, url_sam, url_yolo_best)
     print("Tout est bien installé")
-    grounding_dino_model, sam_predictor = set_up_models()
     print("Models bien installés")
 
 
+def clone_dino():
+    subprocess.run(["git", "clone", "https://github.com/IDEA-Research/GroundingDINO.git"])
+    subprocess.run(["pip","install","-e","./GroundingDINO"])
+    print("GroundingDINO bien installé")
+def clone_segment_anything():
+    subprocess.run(["git", "clone", "https://github.com/facebookresearch/segment-anything.git","segment_anything"])
+    subprocess.run(["pip","install","-e","./segment_anything"])
+def clone_yolov7():
+    subprocess.run(["git", "clone", "https://github.com/WongKinYiu/yolov7.git"])
 
-
-
-
-    
 def download():
+    subprocess.run(["pip","install","-r","requirements.txt"])
     if not os.path.isdir("./GroundingDINO"):
+        clone_dino()
 
-        subprocess.run(["git", "clone", "https://github.com/IDEA-Research/GroundingDINO.git"])
-        os.chdir("./GroundingDINO")
-        subprocess.run(["git", "checkout", "-q", "57535c5a79791cb76e36fdb64975271354f10251"])
-        subprocess.run(["pip","install","-q","-e","."])
-        os.chdir("..")
-    if not os.path.isdir("./segmentAnything"):
-        subprocess.run(["git", "clone", "https://github.com/facebookresearch/segment-anything.git","segmentAnything"])
-
+    if not os.path.isdir("./segment_anything"):
+        clone_segment_anything()
     if not os.path.isdir("./yolov7"):
-        subprocess.run(["git", "clone", "https://github.com/WongKinYiu/yolov7.git"])
+        clone_yolov7()
 
-def  import_weights(url_dino, url_sam, url_yolo_best):
-    if not os.path.isdir("./weights"):
-        os.makedirs("weights", exist_ok=True)
+    if os.path.isdir("./GroundingDINO") and os.listdir("./GroundingDINO") == []:
+        os.rmdir("./GroundingDINO")
+        clone_dino()
 
-    os.chdir("weights")
-    if not os.path.isdir("./sam_vit_h_4b8939.pth"):
-        os.system(f'curl -O {url_sam}')
-    if not os.path.isdir("./groundingdino_swint_ogc.pth"):
-        os.system(f'curl -O {url_dino}')
-    if not os.path.isdir("./best.pt"):
-        os.system(f'curl -O {url_yolo_best}')
-    os.chdir("..")
-    print ("Poids importés")
-
-    # verfier la taille des fichiers
-    if os.path.getsize("./weights/sam_vit_h_4b8939.pth") == 0:
-        print("Fichier sam_vit_h_4b8939.pth vide")
-    if os.path.getsize("./weights/groundingdino_swint_ogc.pth") == 0:
-        print("Fichier groundingdino_swint_ogc.pth vide")
-    if os.path.getsize("./weights/best.pt") == 0:
-        print("Fichier best.pt vide")
+    if os.path.isdir("./segment_anything") and os.listdir("./segment_anything") == []:
+        os.rmdir("./segment_anything")
+        clone_segment_anything()
+    if os.path.isdir("./yolov7") and os.listdir("./yolov7") == []:
+        os.rmdir("./yolov7")
+        clone_yolov7()
 
 
 
-def set_up_models():
-    GROUNDING_DINO_CHECKPOINT_PATH = "./weights/groundingdino_swint_ogc.pth"
-    SAM_CHECKPOINT_PATH = "./weights/sam_vit_h_4b8939.pth"
-    assert os.path.isfile(GROUNDING_DINO_CHECKPOINT_PATH), f"Le fichier {GROUNDING_DINO_CHECKPOINT_PATH} n'existe pas"
-    assert os.path.isfile(SAM_CHECKPOINT_PATH), f"Le fichier {SAM_CHECKPOINT_PATH} n'existe pas"
-    GROUNDING_DINO_CONFIG_PATH ="./GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py"
-    assert os.path.isfile(GROUNDING_DINO_CONFIG_PATH), f"Le fichier {GROUNDING_DINO_CONFIG_PATH} n'existe pas"
-
-
-    DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print(f"Utilisation du device {DEVICE}")
-
-
-    from GroundingDINO.groundingdino.util.inference import load_model, load_image, predict, annotate
-    grounding_dino_model = load_model(model_config_path=GROUNDING_DINO_CONFIG_PATH, model_checkpoint_path=GROUNDING_DINO_CHECKPOINT_PATH)
-    SAM_ENCODER_VERSION = "vit_h"
-    from segmentAnything.segment_anything import sam_model_registry, SamPredictor
-    sam = sam_model_registry[SAM_ENCODER_VERSION](checkpoint=SAM_CHECKPOINT_PATH).to(device=DEVICE)
-    sam_predictor = SamPredictor(sam)
-
-
-    return grounding_dino_model, sam_predictor
