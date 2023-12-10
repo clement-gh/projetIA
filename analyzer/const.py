@@ -18,12 +18,12 @@ SAM_HQ_ENCODER_VERSION = "vit_l"
 
 # WEIGHTS PATH FOR GROUNDING DINO
 GROUNDING_DINO_T_CHECKPOINT_PATH = WEIGTHS_FOLDER + "/groundingdino_swint_ogc.pth"
-GROUNDING_DINO_B_CHECKPOINT_PATH = WEIGTHS_FOLDER + "/groundingdino_swint_ogc.pth"
+GROUNDING_DINO_B_CHECKPOINT_PATH = WEIGTHS_FOLDER + "/groundingdino_swinb_cogcoor.pth"
 GROUNDING_DINO_CONFIG_PATH_FOR_T ="./GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py"
-GROUNDING_DINO_CONFIG_PATH_FOR_B ="./GroundingDINO/groundingdino/config/GroundingDINO_SwinB_COGCOOR.py"
+GROUNDING_DINO_CONFIG_PATH_FOR_B ="./GroundingDINO/groundingdino/config/GroundingDINO_SwinB_cfg.py"
 
 
-
+# URLS FOR WEIGHTS if not found in the folder
 URL_DINO_WEIGHTS_T = "https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swint_ogc.pth"
 URL_DINO_WEIGHTS_B = "https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha2/groundingdino_swinb_cogcoor.pth"
 URL_SAM_WEIGHTS = "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth"
