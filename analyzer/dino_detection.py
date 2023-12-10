@@ -6,9 +6,6 @@ from const import *
 import supervision as sv
 
 ### TODO: delete theses constants
-img_path = 'assets/61.jpg'
-text_prompt = ['cap', 'shirt', 'sunglasses', 'shoe', 'sock', 'backpack', 'sticks', 'bib', 'trousers']
-
 
 
 def detect_with_dino (image_path, text_prompt, box_threshold=0.3, text_threshold=0.3):
@@ -27,8 +24,11 @@ def detect_with_dino (image_path, text_prompt, box_threshold=0.3, text_threshold
     #detections = detections[detections.class_id != text_prompt.index("trousers")]
     box_annotator = sv.BoxAnnotator()
     annotated_image = box_annotator.annotate(scene=image.copy(), detections=detections)
-
+    if len(detections) == 0:
+        raise ValueError("No detections found")
     return annotated_image, detections, phrases
+
+
 
 """
 annotated_frame, detections = detect_with_dino(img_path, text_prompt)
