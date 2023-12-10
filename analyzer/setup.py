@@ -12,10 +12,17 @@ def script_setup():
     url_sam= "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth"
     url_yolo_best = "https://github.com/clement-gh/4A-Internship/raw/main/best.pt"
     url_yolo='https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7.pt'
-    download()
+
     #import_weights(url_dino, url_sam, url_yolo_best)
     print("Tout est bien installé")
     print("Models bien installés")
+
+
+#### To use if not running in docker ####
+def install_requirements():
+    subprocess.run(["pip","install","-r","./requirements.txt"])
+    print("requirements bien installés")
+#### -------------------------------- ####
 
 
 def clone_dino():
@@ -25,11 +32,13 @@ def clone_dino():
 def clone_segment_anything():
     subprocess.run(["git", "clone", "https://github.com/facebookresearch/segment-anything.git","segment_anything"])
     subprocess.run(["pip","install","-e","./segment_anything"])
+    print("segment_anything bien installé")
 def clone_yolov7():
     subprocess.run(["git", "clone", "https://github.com/WongKinYiu/yolov7.git"])
+    print("yolov7 bien installé")
 
-def download():
-    subprocess.run(["pip","install","-r","requirements.txt"])
+
+def clone_and_setup_py():
     if not os.path.isdir("./GroundingDINO"):
         clone_dino()
 
@@ -48,6 +57,7 @@ def download():
     if os.path.isdir("./yolov7") and os.listdir("./yolov7") == []:
         os.rmdir("./yolov7")
         clone_yolov7()
+    print("Tout est bien installé")
 
 
 
