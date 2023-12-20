@@ -1,6 +1,6 @@
 # ignore 
 __pycache__/
-/GroundingDino/
+/GroundingDINO/
 
 /segment_anything/
 
