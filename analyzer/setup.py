@@ -7,6 +7,13 @@ import wget
 from const import *
 
 
+URL_YOLO_CUSTOM_WEIGHTS ="https://github.com/clement-gh/4A-Internship/raw/main/best.pt"
+URL_YOLO_WEIGHTS="https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7.pt"
+URL_DINO_WEIGHTS_T = "https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swint_ogc.pth"
+URL_DINO_WEIGHTS_B = "https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha2/groundingdino_swinb_cogcoor.pth"
+URL_SAM_WEIGHTS = "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth"
+URL_SAM_WEIGHTS_HQ = "https://drive.google.com/file/d/1Uk17tDKX1YAKas5knI4y9ZJCo0lRVL0G/view"
+
 #### To use if not running in docker ####
 def install_requirements():
     subprocess.run(["pip","install","-r","./requirements.txt"])

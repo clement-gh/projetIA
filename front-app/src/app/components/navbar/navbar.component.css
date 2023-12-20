@@ -1,0 +1,42 @@
+/* navbar.component.css */
+
+/* Style pour la barre de navigation */
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Nouvelle classe pour compenser l'espace de la barre de navigation */
+.content {
+    margin-top: 60px; /* Ajustez cette valeur en fonction de la hauteur de votre barre de navigation */
+}
+
+/* Reste de vos styles */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+li {
+    display: inline;
+    margin-right: 20px;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #ff0000;
+}
