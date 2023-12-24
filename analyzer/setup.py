@@ -20,16 +20,25 @@ def install_requirements():
     print("requirements bien installés")
 #### -------------------------------- ####
 
+def verify_location():
+    # verifier que l'on est bien dans le dossier analyzer
+    if not os.path.isdir("./analyzer"):
+        raise ValueError("Vous n'êtes pas dans le dossier analyzer")
+    
 
 def clone_dino():
+    LOGGER.info("clonage de GroundingDINO")
     subprocess.run(["git", "clone", "https://github.com/IDEA-Research/GroundingDINO.git"])
+    LOGGER.info("installation de pyhton dans GroundingDINO")
     subprocess.run(["pip","install","-e","./GroundingDINO"])
     print("GroundingDINO bien installé")
 def clone_segment_anything():
+    LOGGER.info("clonage de segment_anything")
     subprocess.run(["git", "clone", "https://github.com/facebookresearch/segment-anything.git","segment_anything"])
     subprocess.run(["pip","install","-e","./segment_anything"])
     print("segment_anything bien installé")
 def clone_yolov7():
+    LOGGER.info("clonage de yolov7")
     subprocess.run(["git", "clone", "https://github.com/WongKinYiu/yolov7.git"])
     print("yolov7 bien installé")
 
@@ -72,4 +81,12 @@ def download_weights():
         wget.download(URL_YOLO_WEIGHTS, YOLO_WEIGHTS_PATH)
     print("Tout les poids sont bien téléchargés")
 
+
+
+def setup ():
+    verify_location()
+    install_requirements()
+    clone_and_setup_py()
+    download_weights()
+    print("Setup terminé")
 

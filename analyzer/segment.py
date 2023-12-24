@@ -13,6 +13,7 @@ from segment_anything import sam_model_registry, SamPredictor
 sam_predictor= SamPredictor(sam_model_registry[SAM_ENCODER_VERSION](checkpoint=SAM_WEIGHTS_PATH).to(device=DEVICE))
 
 def determine_masks(sam_predictor: SamPredictor, image: np.ndarray, xyxy: np.ndarray) -> np.ndarray:
+    LOGGER.info("determine_masks")
     sam_predictor.set_image(image)
     result_masks = []
     for box in xyxy:

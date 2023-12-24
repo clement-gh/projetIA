@@ -16,7 +16,7 @@ Pillow
 pycocotools
 PyYAML
 requests
-safetensor
+safetensors
 seaborn
 setuptools
 scipy

@@ -9,8 +9,9 @@ import supervision as sv
 
 
 def detect_with_dino (image_path, text_prompt, box_threshold=0.3, text_threshold=0.3):
+    LOGGER.info("detect_with_dino")
     image = cv2.imread(image_path)
-    grounding_dino_model = Model(model_config_path=GROUNDING_DINO_CONFIG_PATH, model_checkpoint_path=GROUNDING_DINO_T_CHECKPOINT_PATH, device=DEVICE)
+    grounding_dino_model = Model(model_config_path=GROUNDING_DINO_CONFIG_PATH_FOR_T, model_checkpoint_path=GROUNDING_DINO_T_CHECKPOINT_PATH, device=DEVICE)
 
     detections, phrases = grounding_dino_model.predict_with_caption(
         image=image,

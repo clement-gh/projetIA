@@ -4,8 +4,9 @@ import torch
 import os
 import logging
 
+
 # WEIGHTS FOLDER GLOBAL
-WEIGTHS_FOLDER = "H:\IA_project\Poids"
+WEIGTHS_FOLDER = "E:\IA_project\Poids"
 
 # WEIGHTS PATH FOR SAM
 # SAM
@@ -40,6 +41,13 @@ URL_SAM_WEIGHTS_HQ = "https://huggingface.co/lkeab/hq-sam/resolve/main/sam_hq_vi
 
 
 DEVICE=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+log_format = '%(asctime)s - %(filename)s - %(lineno)d - %(levelname)s - %(message)s'
+logging.basicConfig(filename='./logFile.log', encoding='utf-8', level=logging.DEBUG, format=log_format, filemode='w')
+LOGGER = logging.getLogger()
+LOGGER.info('Logger initialized')
+LOGGER.info('Device used : {}'.format(DEVICE))
+
 
 
 
