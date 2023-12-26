@@ -1,0 +1,37 @@
+.drop-container {
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+  }
+  
+  .drag-drop-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .drag-drop-area p {
+    margin-bottom: 10px;
+  }
+  
+  .select-file-btn {
+    padding: 8px 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .select-file-btn:hover {
+    background-color: #2980b9;
+  }
+  
+
+  
