@@ -2,6 +2,9 @@
 
 <app-drag-and-drop></app-drag-and-drop>
 
+
+<app-file-list [files]="selectedFiles"></app-file-list>
+
 <div class="upload-btn-area">
     <button class="upload-btn" (click)="uploadFile()" [disabled]="selectedFiles.length === 0">Upload</button>
   </div>

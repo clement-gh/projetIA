@@ -1,0 +1,12 @@
+<div *ngIf="files.length > 0">
+    <h2>Liste des fichiers à téléverser :</h2>
+    <ul>
+      <li *ngFor="let file of files">
+        {{ file.name }} - {{ getFileSize(file.size) }}
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="files.length === 0">
+    <p>Aucun fichier sélectionné.</p>
+  </div>
+  

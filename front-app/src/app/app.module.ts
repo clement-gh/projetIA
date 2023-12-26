@@ -19,6 +19,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { DragAndDropComponent } from './components/drag-and-drop/drag-and-drop.component';
+import { FileListComponent } from './components/file-list/file-list.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { DragAndDropComponent } from './components/drag-and-drop/drag-and-drop.c
     NavbarComponent,
     UploadDirective,
     DragAndDropComponent,
+    FileListComponent,
   
   ],
   imports: [
