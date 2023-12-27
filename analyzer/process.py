@@ -35,6 +35,7 @@ def first_step(img):
 
 
 def second_step(colorize_list_of_masks):
+    # clear the folder 
     folder = PATH_PERSON
     for filename in os.listdir(folder):
         file_path = os.path.join(folder, filename)
@@ -45,11 +46,15 @@ def second_step(colorize_list_of_masks):
         except Exception as e:
             print('Failed to delete %s. Reason: %s' % (file_path, e))
 
-        for i in range(len(colorize_list_of_masks)):
-            name=PATH_PERSON+"p_"+str(id_gen())+'.jpg'
-            img = colorize_list_of_masks[i]
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            cv2.imwrite(name, img)
+    for i in range(len(colorize_list_of_masks)):
+        image_path = image_path.split('.')[0]
+        image_path = image_path.split('/')[-1]
+
+        name=PATH_PERSON+"p_"+str(i)+'_'+str(id_gen(img_path))+'.jpg'
+        img = colorize_list_of_masks[i]
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        cv2.imwrite(name, img)
+    
 
 def third_step():
     # for each image in the folder PATH_PERSON
