@@ -19,7 +19,7 @@ def detect_with_dino (image, text_prompt, box_threshold=0.3, text_threshold=0.3)
         box_threshold=box_threshold,
         text_threshold=text_threshold
     )
-    print (phrases)
+
     classe_id_list_str =  grounding_dino_model.phrases2classes(phrases, text_prompt)
     detections.class_id = classe_id_list_str
     #detections = detections[detections.class_id != text_prompt.index("trousers")]

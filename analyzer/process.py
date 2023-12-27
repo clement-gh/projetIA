@@ -20,6 +20,12 @@ def detect_and_segment(img, text_prompt,b_t_dino=0.3, t_t_dino=0.3):
     
     segmented_image, detections = segment(detections, img)
 
+    # si il y a a une phrase dans la detection qui n'est pas  exactement dans le text_prompt
+    # on print un warning
+    for phrase in phrases:
+        if phrase not in text_prompt:
+            LOGGER.warning("La phrase : "+phrase+" n'est pas dans le text_prompt")
+            print("La phrase : "+phrase+" n'est pas dans le text_prompt")
     
     return annotated_image, segmented_image, detections, phrases
 
@@ -29,12 +35,13 @@ def first_step(img):
 
     if len(detections) == 0 or detections is None:
         raise ValueError("No detection detected")
+    
     binarized_list_of_masks=binarize_list_of_masks(detections.mask)
     colorized_list_of_masks=colorize_list_of_masks(binarized_list_of_masks, img)
     return colorized_list_of_masks
 
 
-def second_step(colorize_list_of_masks):
+def second_step(colorize_list_of_masks, image_path):
     # clear the folder 
     folder = PATH_PERSON
     for filename in os.listdir(folder):
@@ -50,7 +57,7 @@ def second_step(colorize_list_of_masks):
         image_path = image_path.split('.')[0]
         image_path = image_path.split('/')[-1]
 
-        name=PATH_PERSON+"p_"+str(i)+'_'+str(id_gen(img_path))+'.jpg'
+        name=PATH_PERSON+"p_"+str(i)+'_'+str(id_gen(image_path))+'.jpg'
         img = colorize_list_of_masks[i]
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         cv2.imwrite(name, img)

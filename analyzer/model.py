@@ -21,9 +21,9 @@ def id_gen(image_name):
     return numeric_id
 
 
-def create_person(original_image_name, person_image, detections):
+def create_person(name, person_image, original_image_name):
     person = {}
-    person["name"] = id_gen()
+    person["name"] = name
     person["image"] = person_image
     person["original_image"] = original_image_name
     return person
