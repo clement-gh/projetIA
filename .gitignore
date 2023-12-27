@@ -1,1 +1,5 @@
 /Poids/
+
+# tout les dossier nommés test ou tests dans tout les sous dossiers
+#**/test*/**
+**/tests*/**

@@ -14,9 +14,9 @@ from model import id_gen
 
 #img = cv2.imread(img_path)
 
-def detect_and_segment(img, text_prompt):
+def detect_and_segment(img, text_prompt,b_t_dino=0.3, t_t_dino=0.3):
     
-    annotated_image, detections, phrases = detect_with_dino(img, text_prompt)
+    annotated_image, detections, phrases = detect_with_dino(img, text_prompt,b_t_dino, t_t_dino)
     
     segmented_image, detections = segment(detections, img)
 
@@ -25,7 +25,7 @@ def detect_and_segment(img, text_prompt):
 
 def first_step(img):
     text_prompt = ['person']
-    annotated_image, segmented_image, detections, phrases = detect_and_segment(img, text_prompt)
+    annotated_image, segmented_image, detections, phrases = detect_and_segment(img, text_prompt,b_t_dino=0.4, t_t_dino=0.3)# 0.4, 0.3 pour les personnes pour limiter les faux positifs
 
     if len(detections) == 0 or detections is None:
         raise ValueError("No detection detected")
@@ -35,11 +35,22 @@ def first_step(img):
 
 
 def second_step(colorize_list_of_masks):
+    folder = PATH_PERSON
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
 
-    for i in range(len(colorize_list_of_masks)):
+        except Exception as e:
+            print('Failed to delete %s. Reason: %s' % (file_path, e))
 
-        cv2.imwrite(PATH_PERSON+"p_"+id_gen()+".jpg", colorize_list_of_masks[i])
-    
+        for i in range(len(colorize_list_of_masks)):
+            name=PATH_PERSON+"p_"+str(id_gen())+'.jpg'
+            img = colorize_list_of_masks[i]
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            cv2.imwrite(name, img)
+
 def third_step():
     # for each image in the folder PATH_PERSON
     text_prompt = ['cap', 'shirt', 'sunglasses', 'shoe', 'sock', 'backpack', 'sticks', 'bib', 'trousers']
@@ -51,7 +62,6 @@ def third_step():
         else:
             binarized_list_of_masks=binarize_list_of_masks(detections.mask)
             colorized_list_of_masks=colorize_list_of_masks(binarized_list_of_masks, img)
-            
 
 
 

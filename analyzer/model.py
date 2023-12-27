@@ -5,9 +5,21 @@ import time
 import calendar
 import random
 
-def id_gen():
-    time_stamp = calendar.timegm(time.gmtime()) + random.randint(0,1000)
-    return time_stamp
+import hashlib
+
+def id_gen(image_name):
+    # Convertir le nom de l'image en une chaîne d'octets pour le hachage
+    image_name_bytes = image_name.encode('utf-8')
+    # Calculer le hachage MD5 (ou un autre algorithme de hachage si préféré)
+    hashed = hashlib.md5(image_name_bytes)
+    # Obtenir la représentation hexadécimale du hachage
+    hex_hash = hashed.hexdigest()
+    # Prendre les 8 premiers caractères du hachage pour limiter la taille de l'ID
+    limited_hash = hex_hash[:8]
+    # Convertir la représentation hexadécimale en un nombre entier 
+    numeric_id = int(limited_hash, 16)  # Convertir depuis la base 16 (hexadécimale
+    return numeric_id
+
 
 def create_person(original_image_name, person_image, detections):
     person = {}

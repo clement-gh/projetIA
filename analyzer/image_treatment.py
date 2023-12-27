@@ -16,9 +16,9 @@ def binarize_mask(mask):
 
 def binarize_list_of_masks(list_of_masks):
     LOGGER.info("binarize_list_of_masks")
-    binarized_masks = list_of_masks
+    binarized_masks = []
     for i in range(len(list_of_masks)):
-        binarized_masks[i] = binarize_mask(list_of_masks[i])
+        binarized_masks.append( binarize_mask(list_of_masks[i]))
     LOGGER.info("binarize_list_of_masks terminé")
     return binarized_masks
 
@@ -35,13 +35,14 @@ def plot_masks(list_of_masks):
         plt.show()
 
 def colorize_mask(bin_mask, img):
-
+    
     img_arr = np.asarray(img)
     bin_mask = np.expand_dims(bin_mask, axis=2)
     result_arr = np.bitwise_and(img_arr, bin_mask)
-    result_img = Image.fromarray(result_arr)
+    # convert arr to image with opencv
+    result_img = cv2.cvtColor(result_arr, cv2.COLOR_BGR2RGB)
     #convert to RGB with cv2
-    result_img = cv2.cvtColor(np.array(result_img), cv2.COLOR_BGR2RGB)
+
     return result_img
 
 def colorize_list_of_masks(list_of_masks, img):
