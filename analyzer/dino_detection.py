@@ -27,6 +27,8 @@ def detect_with_dino (image_path, text_prompt, box_threshold=0.3, text_threshold
     annotated_image = box_annotator.annotate(scene=image.copy(), detections=detections)
     if len(detections) == 0:
         raise ValueError("No detections found")
+    else:
+        LOGGER.info("Detection terminée")
     return annotated_image, detections, phrases
 
 

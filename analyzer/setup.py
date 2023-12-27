@@ -21,9 +21,10 @@ def install_requirements():
 #### -------------------------------- ####
 
 def verify_location():
-    # verifier que l'on est bien dans le dossier analyzer
-    if not os.path.isdir("./analyzer"):
-        raise ValueError("Vous n'êtes pas dans le dossier analyzer")
+    # verifier que le chemin du dossier fini par analyzer
+    if os.getcwd().split('/')[-1] != 'analyzer':
+        print("Veuillez vous placer dans le dossier analyzer")
+        exit(1)
     
 
 def clone_dino():
@@ -68,25 +69,40 @@ def download_weights():
     if not os.path.isdir(WEIGTHS_FOLDER):
         os.mkdir(WEIGTHS_FOLDER)
     if not os.path.isfile(SAM_WEIGHTS_PATH):
+        print("Téléchargement des poids de SAM")
         wget.download(URL_SAM_WEIGHTS, SAM_WEIGHTS_PATH)
     if not os.path.isfile(SAM_HQ_WEIGHTS_PATH):
+        print("Téléchargement des poids de SAM HQ")
         wget.download(URL_SAM_WEIGHTS_HQ, SAM_HQ_WEIGHTS_PATH)
     if not os.path.isfile(GROUNDING_DINO_T_CHECKPOINT_PATH):
+        print("Téléchargement des poids de DINO T")
         wget.download(URL_DINO_WEIGHTS_T, GROUNDING_DINO_T_CHECKPOINT_PATH)
     if not os.path.isfile(GROUNDING_DINO_B_CHECKPOINT_PATH):
+        print("Téléchargement des poids de DINO B")
         wget.download(URL_DINO_WEIGHTS_B, GROUNDING_DINO_B_CHECKPOINT_PATH)
     if not os.path.isfile(YOLO_CUSTOM_WEIGHTS_PATH):
+        print("Téléchargement des poids de YOLO CUSTOM")
         wget.download(URL_YOLO_CUSTOM_WEIGHTS, YOLO_CUSTOM_WEIGHTS_PATH)
     if not os.path.isfile(YOLO_WEIGHTS_PATH):
+        print("Téléchargement des poids de YOLO")
         wget.download(URL_YOLO_WEIGHTS, YOLO_WEIGHTS_PATH)
     print("Tout les poids sont bien téléchargés")
 
 
 
+def install_py_in_folders():
+    subprocess.run(["git", "clone", "https://github.com/WongKinYiu/yolov7.git"])
+    subprocess.run(["pip","install","-e","./segment_anything"])
+    subprocess.run(["pip","install","-e","./GroundingDINO"])
+
 def setup ():
-    verify_location()
+    #verify_location()
     install_requirements()
     clone_and_setup_py()
     download_weights()
+    install_py_in_folders()
     print("Setup terminé")
+
+#setup()
+
 

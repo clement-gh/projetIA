@@ -34,6 +34,7 @@ def segment(detections: sv.Detections, image_path: str):
     )
     mask_annotator = sv.MaskAnnotator()
     segmented_image = mask_annotator.annotate(scene=image.copy(), detections=detections)
+    LOGGER.info("Segmentation terminée")
 
     return segmented_image, detections
 

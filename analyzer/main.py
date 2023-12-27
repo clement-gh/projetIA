@@ -1,6 +1,7 @@
 import torch
 import supervision as sv
 import os
+import cv2
 
 from setup import *
 from const import *
@@ -11,6 +12,7 @@ import logging
 
 if __name__ == '__main__':
     
+    
     print (check_available_weights())
     img_path = 'assets/61.jpg'
     text_prompt = ['cap', 'shirt', 'sunglasses', 'shoe', 'sock', 'backpack', 'sticks', 'bib', 'trousers']
@@ -18,10 +20,6 @@ if __name__ == '__main__':
 
     segmented_image, detections = segment(detections, img_path)
     # enregistrer les images
+    cv2.imwrite("assets/segmented_image.jpg", segmented_image)
     
-    LOGGER.debug('debug message')
-    LOGGER.info('info message')
-    LOGGER.warning('warn message')
-    LOGGER.error('error message')
-    LOGGER.critical('critical message')
     

@@ -6,7 +6,7 @@ import logging
 
 
 # WEIGHTS FOLDER GLOBAL
-WEIGTHS_FOLDER = "E:\IA_project\Poids"
+WEIGTHS_FOLDER = "../Poids"
 
 # WEIGHTS PATH FOR SAM
 # SAM
@@ -26,7 +26,7 @@ GROUNDING_DINO_CONFIG_PATH_FOR_B ="./GroundingDINO/groundingdino/config/Groundin
 # WEIGHTS PATH FOR YOLO
 YOLO_CUSTOM_WEIGHTS_PATH = WEIGTHS_FOLDER + "/best.pt"
 YOLO_WEIGHTS_PATH = WEIGTHS_FOLDER + "/yolov7.pt"
-
+ 
 # URLS FOR WEIGHTS if not found in the folder
 
 URL_YOLO_CUSTOM_WEIGHTS ="https://github.com/clement-gh/4A-Internship/raw/main/best.pt"
