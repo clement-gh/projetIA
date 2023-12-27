@@ -1,5 +1,7 @@
 addict
 accelerate
+calendar
+datetime
 diffusers
 diffusers[torch]
 fairscale

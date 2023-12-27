@@ -49,7 +49,7 @@ LOGGER.info('Logger initialized')
 LOGGER.info('Device used : {}'.format(DEVICE))
 
 
-
+PATH_PERSON = "assets/tests/" # path to the person images
 
 ### TODO: use this function befor any call to the models !!
 def check_available_weights():

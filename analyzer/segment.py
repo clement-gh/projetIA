@@ -25,8 +25,8 @@ def determine_masks(sam_predictor: SamPredictor, image: np.ndarray, xyxy: np.nda
         result_masks.append(masks[index])
     return np.array(result_masks)
 
-def segment(detections: sv.Detections, image_path: str):
-    image = cv2.imread(image_path)
+def segment(detections: sv.Detections, image):
+   
     detections.mask = determine_masks(
     sam_predictor=sam_predictor,
     image=cv2.cvtColor(image, cv2.COLOR_BGR2RGB),

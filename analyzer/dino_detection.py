@@ -8,9 +8,9 @@ import supervision as sv
 ### TODO: delete theses constants
 
 
-def detect_with_dino (image_path, text_prompt, box_threshold=0.3, text_threshold=0.3):
+def detect_with_dino (image, text_prompt, box_threshold=0.3, text_threshold=0.3):
     LOGGER.info("detect_with_dino")
-    image = cv2.imread(image_path)
+    
     grounding_dino_model = Model(model_config_path=GROUNDING_DINO_CONFIG_PATH_FOR_T, model_checkpoint_path=GROUNDING_DINO_T_CHECKPOINT_PATH, device=DEVICE)
 
     detections, phrases = grounding_dino_model.predict_with_caption(
