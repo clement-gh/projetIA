@@ -25,7 +25,8 @@ def detect_and_segment(img, text_prompt):
 
 def first_step(img):
     text_prompt = ['person']
-    annotated_image, detections, phrases = detect_and_segment(img, text_prompt)
+    annotated_image, segmented_image, detections, phrases = detect_and_segment(img, text_prompt)
+
     if len(detections) == 0 or detections is None:
         raise ValueError("No detection detected")
     binarized_list_of_masks=binarize_list_of_masks(detections.mask)
@@ -44,7 +45,7 @@ def third_step():
     text_prompt = ['cap', 'shirt', 'sunglasses', 'shoe', 'sock', 'backpack', 'sticks', 'bib', 'trousers']
     for filename in os.listdir(PATH_PERSON):
         img = cv2.imread(PATH_PERSON+filename)
-        annotated_image, detections, phrases = detect_and_segment(img, text_prompt)
+        annotated_image, segmented_image, detections, phrases = detect_and_segment(img, text_prompt)
         if len(detections) == 0 or detections is None:
             LOGGER.error("No detection detected")
         else:
