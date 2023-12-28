@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from const import *
 import cv2
+import math
 def binarize_mask(mask):
     binarized_mask= mask
     for j in range(len(mask)):
@@ -35,7 +36,6 @@ def plot_masks(list_of_masks):
         plt.show()
 
 def colorize_mask(bin_mask, img):
-    
     img_arr = np.asarray(img)
     bin_mask = np.expand_dims(bin_mask, axis=2)
     result_arr = np.bitwise_and(img_arr, bin_mask)
@@ -52,3 +52,30 @@ def colorize_list_of_masks(list_of_masks, img):
         colorized_masks.append(colorize_mask(list_of_masks[i], img))
     LOGGER.info("colorize_list_of_masks terminé")
     return colorized_masks
+
+def get_bib_numbers_index(tab_labels):
+    index = 0
+    for label in tab_labels:
+        if label == 'bib':
+            return index
+        index += 1
+    return None
+
+def crop_bip_numbers(tab_labels,image, detections):
+    LOGGER.info("crop_bip_numbers")
+    index= get_bib_numbers_index(tab_labels)
+    if index is not None:
+        # rounding the float numbers
+        x1 = math.floor(detections.xyxy[index][0])
+        y1 = math.floor(detections.xyxy[index][1])
+        x2 = math.floor(detections.xyxy[index][2])
+        y2 = math.floor(detections.xyxy[index][3])
+        image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+        # crop the original image with the detection box
+        cropped_image = image.crop((x1, y1, x2, y2))
+        LOGGER.info("crop_bip_numbers terminé")
+        return cropped_image
+    else:
+
+        LOGGER.info("any bip numbers found in the image")
+        return None
