@@ -69,9 +69,9 @@ def second_step(colorize_list_of_masks, image_path):
 
         
 
-def step3(img_path):
+def step3(img):
 
-    img = cv2.imread(img_path)
+    
     text_prompt = ['cap', 'shirt', 'sunglasses', 'shoe', 'sock', 'backpack', 'sticks', 'bib', 'trousers']
     annotated_image, segmented_image, detections, phrases = detect_and_segment(img, text_prompt)
 
@@ -131,4 +131,4 @@ def part2():
         dict = step5(tab_names , average_colors_hexa,detections, phrases ,colorized_masks,croped_bib)
         print(dict)
 
-
+part2()
