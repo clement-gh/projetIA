@@ -90,11 +90,11 @@ def determine_color(mask_images, label_list, number_of_colors=15):
 
             for idx, row in enumerate(hsv_values):
                 image = cv2.putText(img_bar, f'{idx + 1}', (5 + 200 * idx, 200 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 1, cv2.LINE_AA)
-
+            '''
             plt.imshow(image)
             plt.axis('off')
             plt.show()
-
+            '''
             for count, color in zip(counts, hsv_values):
                 color_counts[color] = count if color not in color_counts else color_counts[color] + count
 
