@@ -29,6 +29,43 @@ def create_person(name, person_image, original_image_name):
     return person
 
 
-
+dict = {}
+dict['person'] =  None
+dict['cap'] = {
+    'detected': False,
+    'color': None,
+}
+dict['shirt'] = {
+    'detected': False,
+    'color': None,
+}
+dict['sunglasses'] = {
+    'detected': False,
+    'color': None,
+}
+dict['shoe'] = {
+    'detected': False,
+    'color': None,
+}
+dict['sock'] = {
+    'detected': False,
+    'color': None,
+}
+dict['backpack'] = {
+    'detected': False,
+    'color': None,
+}
+dict['sticks'] = {
+    'detected': False,
+    # pas de couleur car non pertinent de l'utiliser
+}
+dict['bib'] = {
+    'detected': False,
+    'nmbers': None,
+}
+dict['trousers'] = {
+    'detected': False,
+    'color': None,
+}
 
 

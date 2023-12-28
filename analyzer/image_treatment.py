@@ -70,9 +70,9 @@ def crop_bip_numbers(tab_labels,image, detections):
         y1 = math.floor(detections.xyxy[index][1])
         x2 = math.floor(detections.xyxy[index][2])
         y2 = math.floor(detections.xyxy[index][3])
-        image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+        
         # crop the original image with the detection box
-        cropped_image = image.crop((x1, y1, x2, y2))
+        cropped_image = image[y1:y2, x1:x2]
         LOGGER.info("crop_bip_numbers terminé")
         return cropped_image
     else:
