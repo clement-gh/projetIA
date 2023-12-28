@@ -15,6 +15,7 @@ numpy
 onnxruntime
 opencv_python
 pandas
+pathlib
 Pillow
 pycocotools
 PyYAML
@@ -24,6 +25,7 @@ seaborn
 setuptools
 scipy
 supervision
+sys
 tensorboard
 tensorflow
 termcolor

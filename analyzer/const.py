@@ -4,6 +4,9 @@ import torch
 import os
 import logging
 
+import sys
+from pathlib import Path
+
 
 # WEIGHTS FOLDER GLOBAL
 WEIGTHS_FOLDER = "../Poids"
@@ -47,6 +50,9 @@ logging.basicConfig(filename='./logFile.log', encoding='utf-8', level=logging.DE
 LOGGER = logging.getLogger()
 LOGGER.info('Logger initialized')
 LOGGER.info('Device used : {}'.format(DEVICE))
+yolov7_path = Path('./yolov7')
+sys.path.append(str(yolov7_path.resolve()))
+LOGGER.info("yolov7 chargé")
 
 
 PATH_PERSON = "assets/tests/" # path to the person images
