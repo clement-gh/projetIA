@@ -3,5 +3,5 @@
 # tout les dossier nommés test ou tests dans tout les sous dossiers
 #**/test*/**
 #**/tests*/**
-# fichiers .env dans tout les sous dossiers
-**/.env
+# fichiers .env dans tout les sous dossiers 
+**/**/.env
