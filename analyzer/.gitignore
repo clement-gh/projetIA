@@ -6,7 +6,10 @@ __pycache__/
 
 /weights/
 /yolov7/
+# garder le dossier Poids mais pas les fichiers dedans 
 
 # logs
 *.log
 **/.env
+Poids/*
+!Poids/.gitkeep

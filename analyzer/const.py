@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 # WEIGHTS FOLDER GLOBAL
-WEIGTHS_FOLDER = "../Poids"
+WEIGTHS_FOLDER = "./Poids"
 
 # WEIGHTS PATH FOR SAM
 # SAM
