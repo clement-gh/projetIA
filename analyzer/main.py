@@ -11,8 +11,6 @@ import logging
 
 
 if __name__ == '__main__':
-    
-    
     print (check_available_weights())
     img_path = 'assets/61.jpg'
     text_prompt = ['cap', 'shirt', 'sunglasses', 'shoe', 'sock', 'backpack', 'sticks', 'bib', 'trousers']
@@ -21,5 +19,4 @@ if __name__ == '__main__':
     segmented_image, detections = segment(detections, img_path)
     # enregistrer les images
     cv2.imwrite("assets/segmented_image.jpg", segmented_image)
-    
     

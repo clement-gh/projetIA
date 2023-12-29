@@ -32,34 +32,42 @@ def authentification():
         print(f"Erreur lors de la requête : {e}")
 
 
+def trigger_new_request():
+    # Cette fonction est appelée lorsque le serveur a reçu toutes les images
+    # Vous pouvez placer ici la logique pour déclencher une nouvelle requête
+    print("Nouvelle requête déclenchée côté client.")
 
-def upload_img(img_path):
+
+def upload_img(img_paths):
     server_url = URL + '/upload-image'  # Remplacez par l'adresse de votre serveur
     global MY_TOKEN
     if MY_TOKEN == "":
-        MY_TOKEN = authentification()
-    headers = {'Authorization': f'Bearer {MY_TOKEN}'}
+        MY_TOKEN = 
+        headers = {'Authorization': f'Bearer {MY_TOKEN}'}
 
-    with open(img_path, 'rb') as file:
-        files = {'image': file}
-        response = requests.post(server_url, headers=headers, files=files)
+    for index, img_path in enumerate(img_paths):
+        filename = os.path.basename(img_path)
+        with open(img_path, 'rb') as file:
+            files = {'image': file, 'filename': filename}
 
-        if response.status_code == 200:
-            print(response.json())
-        # Si on a une erreur 401, on réessaie une fois car le token a peut-être expiré
-        elif response.status_code == 401:
-            MY_TOKEN = authentification()
-            headers = {'Authorization': f'Bearer {MY_TOKEN}'}
-            response = requests.post(server_url, headers=headers, files=files)
-            # si on a toujours une erreur, on affiche l'erreur
-            if response.status_code == 401:
-                print("Erreur lors de l'authentification")
-            elif response.status_code == 200:
+            # Vérifier si c'est la dernière image
+            is_last_image = index == len(img_paths) - 1
+
+            response = requests.post(server_url, headers=headers, files=files, data={'is_last_image': is_last_image})
+
+            if response.status_code == 200:
+                print(f"Image {img_path} envoyée avec succès.")
                 print(response.json())
-            
-        else:
-            print(response.text)
+                if is_last_image:
+                    trigger_new_request()  # Appel d'une nouvelle fonction après avoir reçu la confirmation du serveur
+            else:
+                print(f"Échec de l'envoi de l'image {img_path}.")
+                print(response.text)
 
 
-image_path = './DSC1223.jpg'
-upload_img(image_path)
+# Liste des chemins vers les images que vous souhaitez envoyer
+image_paths = ['./DSC1223.jpg', './demo7.jpg', './61.jpg']
+upload_img(image_paths)
+
+
+

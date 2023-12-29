@@ -4,6 +4,7 @@ calendar
 datetime
 diffusers
 diffusers[torch]
+python-dotenv
 fairscale
 flask
 gradio
@@ -38,4 +39,5 @@ tqdm
 transformers
 wget
 json
-jwt
+pyjwt
+Werkzeug

@@ -7,7 +7,7 @@ from setup import *
 from const import *
 from dino_detection import detect_with_dino
 from segment import segment
-from image_treatment import *
+from image_treatment import binarize_mask, colorize_mask, binarize_list_of_masks, colorize_list_of_masks, crop_bip_numbers
 from model import id_gen
 from yolo_detection import detect_objects, sort_bib_numbers, extract_bib_numbers, concat_bib_numbers
 from model import  generate_json_person
