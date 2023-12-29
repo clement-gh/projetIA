@@ -9,9 +9,10 @@ from dino_detection import detect_with_dino
 from segment import segment
 from image_treatment import *
 from model import id_gen
-from color_classifier import *
 from yolo_detection import detect_objects, sort_bib_numbers, extract_bib_numbers, concat_bib_numbers
 from model import  generate_json_person
+from color_detection import color_or_grayscale
+from color_classifier import  determine_color_v2
 
 
 
@@ -98,7 +99,7 @@ def step5 (tab_names , average_colors_hexa, phrases ,croped_bib, text_prompt, p_
     if croped_bib is not None:
         detected_objects = detect_objects(croped_bib, device=DEVICE)
         bibs= concat_bib_numbers(extract_bib_numbers(sort_bib_numbers(detected_objects)))
-        print (bibs)
+
         # parcourir les phrases et le dictionnaire
         dict = generate_json_person (text_prompt)
         print (dict)
@@ -120,7 +121,7 @@ def part2():
     # for each image in the folder PATH_PERSON
     for filename in os.listdir(PATH_PERSON):
         img = cv2.imread(PATH_PERSON+filename)
-        p_name = filename.split('.')[0] 
+        p_name = filename.split('.')[0]
 
         print(dict)
 

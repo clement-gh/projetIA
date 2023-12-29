@@ -24,6 +24,7 @@ safetensors
 seaborn
 setuptools
 scipy
+scikit-learn
 supervision
 sys
 tensorboard

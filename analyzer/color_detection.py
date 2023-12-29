@@ -4,6 +4,9 @@ from numpy.ma.extras import average
 import cv2
 import colorsys
 from PIL import Image
+from sklearn.cluster import KMeans
+import torch
+from torch import Tensor
 
 def rgb2bgr(img_rgb):
     img_bgr = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2BGR)
@@ -214,52 +217,60 @@ def color_or_grayscale(hsv):
     #TODO detect brown
 
 
-def determine_color(mask_images, label_list, number_of_colors=10):
-    tab_average_colors = []
-    tab_names = []
 
-    for index, img in enumerate(mask_images):
-        color_counts = {}
-        bars = []
-        hsv_values = []
-        tab_names.append(label_list[index])
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        all_counts, centers = calculate_centers(img, number_of_colors)
+def calculate_centers_v2(img, number_of_colors):
+    height, width, channels = np.shape(img)
 
-        counts = []
-        for idx, row in enumerate(centers):
-            bar, hsv = create_bar(200, 200, row)
-            if hsv[2] > 0.03:
-                bars.append(bar)
-                hsv_values.append(hsv)
-                counts.append(all_counts[idx])
+    data = np.reshape(img, (height * width, 3))
+    data = np.float32(data)
 
-        for count, color in zip(counts, hsv_values):
-            color_counts[color] = count if color not in color_counts else color_counts[color] + count
+    kmeans = KMeans(n_clusters=number_of_colors, init='k-means++', random_state=42)
+    kmeans.fit(data)
 
-        if bars:
-            img_bar = np.hstack(bars)
-            
-            for idx, row in enumerate(hsv_values):
-                image = cv2.putText(img_bar, f'{idx + 1}', (5 + 200 * idx, 200 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 1, cv2.LINE_AA)
-            '''
-            plt.imshow(image)
-            plt.axis('off')
-            plt.show()
-            '''
-            for count, color in zip(counts, hsv_values):
-                color_counts[color] = count if color not in color_counts else color_counts[color] + count
+    centers = kmeans.cluster_centers_
+    labels = kmeans.labels_
 
-            tab_colors = []
-            tab_nb_pixels = []
-            for key, value in color_counts.items():
-                tab_colors.append(key)
-                tab_nb_pixels.append(value)
+    flat_labels = labels.flatten()
+    counts = np.unique(flat_labels, return_counts=True)[1]
+    return counts, centers
 
-            dominant_color = weighted_hsv_mean(tab_colors, tab_nb_pixels)
-            tab_average_colors.append(dominant_color)
-            print(dominant_color)
-            # afficher le label
-            print(label_list[index])
 
-    return tab_names, tab_average_colors
+def calculate_centers_v3(img, number_of_colors):
+    height, width, channels = np.shape(img)
+
+    # Changement de l'image en une image à deux dimensions
+    data = np.reshape(img, (height * width, 3))
+    data = torch.from_numpy(np.float32(data)).cuda()
+
+    # Utilisation de l'algorithme K-Means GPU
+    centers, labels = kmeans_torch_gpu(data, number_of_colors)
+
+    # Obtention des comptages des clusters
+    flat_labels = labels.cpu().numpy().flatten()
+    counts = np.unique(flat_labels, return_counts=True)[1]
+    
+    return counts, centers.cpu().numpy()
+
+from typing import Tuple
+
+def kmeans_torch_gpu(data: Tensor, k: int, max_iters: int = 100) -> Tuple[Tensor, Tensor]:
+    # Initialisation aléatoire des centroïdes
+    centroids = data[torch.randperm(data.size(0))[:k]].clone().cuda()
+    centroids_prev = centroids.clone()
+
+    for _ in range(max_iters):
+        # Assigner chaque point au centroïde le plus proche
+        distances = ((data[:, None] - centroids[None]) ** 2).sum(-1)
+        labels = torch.argmin(distances, dim=-1)
+
+        # Mettre à jour les centroïdes
+        for i in range(k):
+            if torch.sum(labels == i) > 0:
+                centroids[i] = data[labels == i].mean(0)
+
+        # Vérifier la convergence
+        if torch.all(centroids == centroids_prev):
+            break
+        centroids_prev = centroids.clone()
+
+    return centroids, labels
