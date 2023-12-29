@@ -46,11 +46,9 @@ def login():
 
     # Si l'authentification réussit, générez un token JWT
     if verify_user_validity(username, password):
-        # Définir la durée de validité du token (par exemple, 1 heure)
-        expiration_time = datetime.utcnow() + timedelta(hours=1)
-
+ 
         # Créer le token en spécifiant l'expiration
-        token = jwt.encode({'username': username, 'exp': expiration_time}, app.config['SECRET_KEY'], algorithm='HS256')
+        token = jwt.encode({'username': username}, app.config['SECRET_KEY'], algorithm='HS256')
         return jsonify({'token': token}), 200
     else:
         return jsonify({'message': 'Échec de l\'authentification'}), 401

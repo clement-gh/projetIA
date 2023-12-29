@@ -5,6 +5,7 @@ datetime
 diffusers
 diffusers[torch]
 fairscale
+flask
 gradio
 huggingface_hub
 hashlib
@@ -36,3 +37,5 @@ torchvision
 tqdm
 transformers
 wget
+json
+jwt
