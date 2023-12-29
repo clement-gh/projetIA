@@ -29,43 +29,17 @@ def create_person(name, person_image, original_image_name):
     return person
 
 
-dict = {}
-dict['person'] =  None
-dict['cap'] = {
-    'detected': False,
-    'color': None,
-}
-dict['shirt'] = {
-    'detected': False,
-    'color': None,
-}
-dict['sunglasses'] = {
-    'detected': False,
-    'color': None,
-}
-dict['shoe'] = {
-    'detected': False,
-    'color': None,
-}
-dict['sock'] = {
-    'detected': False,
-    'color': None,
-}
-dict['backpack'] = {
-    'detected': False,
-    'color': None,
-}
-dict['sticks'] = {
-    'detected': False,
-    # pas de couleur car non pertinent de l'utiliser
-}
-dict['bib'] = {
-    'detected': False,
-    'nmbers': None,
-}
-dict['trousers'] = {
-    'detected': False,
-    'color': None,
-}
-
+def generate_json_person (text_prompt):
+    # ajouter le nom de la personne
+    dict={}
+    dict['person'] =  None
+    for text in text_prompt:
+        dict[text] = {
+            'detected': False,
+        }
+        if text in ['cap', 'shirt', 'trousers']:
+            dict[text]['color'] = None
+        elif text == 'number':
+            dict[text]['numbers'] = None
+    return dict
 

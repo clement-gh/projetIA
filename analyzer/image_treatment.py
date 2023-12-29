@@ -56,7 +56,7 @@ def colorize_list_of_masks(list_of_masks, img):
 def get_bib_numbers_index(tab_labels):
     index = 0
     for label in tab_labels:
-        if label == 'bib':
+        if label == 'number':
             return index
         index += 1
     return None

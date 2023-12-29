@@ -12,7 +12,7 @@ from yolov7.utils.general import check_img_size, check_requirements, check_imsho
 from yolov7.utils.torch_utils import select_device, load_classifier, time_synchronized, TracedModel
 
 def detect_objects(image, weights=YOLO_CUSTOM_WEIGHTS_PATH, img_size=640, conf_thres=0.25, iou_thres=0.45, device='', view_img=False, classes=None, agnostic_nms=False, augment=False, trace=False):
-    device = select_device(device)
+    #device = select_device(device)
     model = attempt_load(weights, map_location=device)
     #model = TracedModel(model, device, img_size)
 
