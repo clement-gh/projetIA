@@ -3,8 +3,8 @@ import supervision as sv
 import os
 import cv2
 
-from setup import *
-from const import *
+#from setup import *
+from const import  DEVICE, PATH_IMGS, PATH_PERSON,LOGGER
 from dino_detection import detect_with_dino
 from segment import segment
 from image_treatment import binarize_mask, colorize_mask, binarize_list_of_masks, colorize_list_of_masks, crop_bip_numbers
@@ -14,6 +14,7 @@ from model import  generate_json_person
 from color_detection import color_or_grayscale
 from color_classifier import  determine_color_v2
 import json
+
 
 
 
@@ -35,6 +36,19 @@ def detect_and_segment(img, text_prompt,b_t_dino=0.3, t_t_dino=0.3):
 
 def save_img (img, name):
     cv2.imwrite(name, img)
+def clear_img_brut_folder():
+    folder = PATH_IMGS
+    for filename in os.listdir(folder):
+        if filename == '.gitkeep':
+            continue  # Skip deleting .gitkeep file
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+
+        except Exception as e:
+            return e
+    return "Folder"+PATH_IMGS+" cleared"
 
 
 def first_step(img):

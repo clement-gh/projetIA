@@ -1,9 +1,5 @@
 #creer une personne avec une image de personne, l'image originale, les detections un nom de personneen json
 
-import time
-
-import calendar
-import random
 
 import hashlib
 

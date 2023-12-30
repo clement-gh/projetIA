@@ -9,8 +9,9 @@ import os
 from datetime import datetime, timedelta
 
 URL= "http://localhost:5000"
-MY_TOKEN = ""
 load_dotenv()
+MY_TOKEN = os.getenv("TOKEN_API")
+
 
 
 # Remplacez ceci par le chemin d'accès à votre image
@@ -33,17 +34,22 @@ def authentification():
 
 
 def trigger_new_request():
-    # Cette fonction est appelée lorsque le serveur a reçu toutes les images
-    # Vous pouvez placer ici la logique pour déclencher une nouvelle requête
-    print("Nouvelle requête déclenchée côté client.")
+    server_url = URL + '/protected' 
+    global MY_TOKEN
+    headers = {'Authorization': f'Bearer {MY_TOKEN}'}
+    response = requests.get(server_url, headers=headers)
+    if response.status_code == 200:
+        print(f"Requête envoyée avec succès.")
+        print(response.text)
+    else:
+        print(f"Échec de l'envoi de la requête.")
+        print(response.text)
 
 
 def upload_img(img_paths):
     server_url = URL + '/upload-image'  # Remplacez par l'adresse de votre serveur
     global MY_TOKEN
-    if MY_TOKEN == "":
-        MY_TOKEN = 
-        headers = {'Authorization': f'Bearer {MY_TOKEN}'}
+    headers = {'Authorization': f'Bearer {MY_TOKEN}'}
 
     for index, img_path in enumerate(img_paths):
         filename = os.path.basename(img_path)
@@ -66,8 +72,8 @@ def upload_img(img_paths):
 
 
 # Liste des chemins vers les images que vous souhaitez envoyer
+                
 image_paths = ['./DSC1223.jpg', './demo7.jpg', './61.jpg']
-upload_img(image_paths)
+#upload_img(image_paths)
 
-
-
+trigger_new_request()

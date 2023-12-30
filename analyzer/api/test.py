@@ -22,7 +22,7 @@ print(token)
 jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
 """
 
-from security import hash_password, verify_user_validity
+from analyzer.package.security import hash_password, verify_user_validity
 
 
 

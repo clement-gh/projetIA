@@ -100,6 +100,7 @@ def setup ():
     download_weights()
     install_py_in_folders()
     print("Setup terminé")
+    
 if __name__ == "__main__":
     setup()
 
