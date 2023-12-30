@@ -33,6 +33,7 @@ def generate_json_person (text_prompt):
     # ajouter le nom de la personne
     dict={}
     dict['person'] =  None
+    dict['imgName'] = None
     for text in text_prompt:
         dict[text] = {
             'detected': False,

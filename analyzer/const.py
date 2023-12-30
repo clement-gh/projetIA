@@ -55,7 +55,8 @@ sys.path.append(str(yolov7_path.resolve()))
 LOGGER.info("yolov7 chargé")
 
 
-PATH_PERSON = "assets/tests/" # path to the person images
+PATH_PERSON = "data/persons/" # path to the person images
+PATH_IMGS= "data/imgbrut/"
 
 ### TODO: use this function befor any call to the models !!
 def check_available_weights():

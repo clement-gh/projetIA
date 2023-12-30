@@ -66,8 +66,6 @@ def clone_and_setup_py():
     print("Tout est bien installé")
 
 def download_weights():
-    if not os.path.isdir(WEIGTHS_FOLDER):
-        os.mkdir(WEIGTHS_FOLDER)
     if not os.path.isfile(SAM_WEIGHTS_PATH):
         print("Téléchargement des poids de SAM")
         wget.download(URL_SAM_WEIGHTS, SAM_WEIGHTS_PATH)
@@ -97,12 +95,12 @@ def install_py_in_folders():
 
 def setup ():
     #verify_location()
-    install_requirements()
+    #install_requirements()
     clone_and_setup_py()
     download_weights()
     install_py_in_folders()
     print("Setup terminé")
-
-#setup()
+if __name__ == "__main__":
+    setup()
 
 

@@ -10,6 +10,8 @@ from datetime import datetime, timedelta
 from flask_cors import CORS
 from security import hash_password, verify_user_validity
 from werkzeug.utils import secure_filename
+from const import *
+from process import save_img
 
 
 
@@ -69,15 +71,16 @@ def upload_image():
         uploaded_file = request.files['image']
         is_last_image = request.form.get('is_last_image') == 'True'  # Récupérer le marqueur pour savoir si c'est la dernière image
         filename = secure_filename(uploaded_file.filename)  # Récupérer le nom du fichier
-        
-    # Traiter l'image reçue
-    # Sauvegarder, manipuler, etc.
+        # Sauvegarder l'image dans le dossier 
+        path =  "../"+PATH_IMGS+filename
+        save_img(uploaded_file, path)
 
     if is_last_image:
 # Exécuter la fonction côté serveur lorsque c'est la dernière image
         return jsonify({'message': 'Dernière image reçue.'})
     else:
         return jsonify({'message': 'Image reçue.'})
+
 
 @app.route('/traitement', methods=['POST'])
 def traitement():

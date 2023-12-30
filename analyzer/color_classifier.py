@@ -50,9 +50,11 @@ def determine_color(mask_images, label_list, number_of_colors=10):
 
             dominant_color = weighted_hsv_mean(tab_colors, tab_nb_pixels)
             tab_average_colors.append(dominant_color)
+            '''
             print(dominant_color)
-            # afficher le label
             print(label_list[index])
+            '''
+            
 
     return tab_names, tab_average_colors
 
