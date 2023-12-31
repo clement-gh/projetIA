@@ -12,7 +12,7 @@ export class DragAndDropComponent {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
 
-  constructor(private apiService: ApiService) {}
+  constructor() {}
 
 
   
@@ -28,6 +28,19 @@ export class DragAndDropComponent {
   }
   
 
+  verifyFileIsImage(files: File[]): boolean {
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const fileName = file.name;
+      const fileExtension = fileName.split('.').pop();
+      if (fileExtension !== 'jpg' && fileExtension !== 'png') {
+        return false;
+      } else {
+        return true;
+      }
+    }
+    return false; // Add a default return statement
+  }
   onDragOver(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
@@ -45,8 +58,16 @@ export class DragAndDropComponent {
   handleFiles(files: FileList | null) {
     if (files) {
       for (let i = 0; i < files.length; i++) {
-        this.selectedFiles.push(files[i]);
+        const file = files[i];
+        if (this.verifyFileIsImage([file])) {
+          this.selectedFiles.push(file);
+        }
+        else {
+          alert('Le fichier ' + file.name + ' n\'est pas une image. \n Veuillez sélectionner uniquement des fichiers .jpg ou .png');
+        }
+ 
       }
+      
       this.filesChanged.emit(this.selectedFiles); // Émettre l'événement avec les nouveaux fichiers sélectionnés
     }
   }

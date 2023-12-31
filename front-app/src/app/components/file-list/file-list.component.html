@@ -1,12 +1,16 @@
 <div >
   <h2>Liste des fichiers à téléverser :</h2>
-  <ul>
-    <li *ngFor="let file of files; let i = index">
-      {{ file.name }} - {{ getFileSize(file.size) }}
-      <button (click)="removeFile(i)">Supprimer</button>
+  <ul >
+    <li *ngFor="let file of files; let i = index" class="li-area">
+      <div class="filename">
+      {{ file.name }}
+    </div>
+    <div class="del-btn-area">
+      <button (click)="removeFile(i)" class="del-btn">X</button>
+    </div>
     </li>
   </ul>
 </div>
-<div *ngIf="files.length === 0">
+<div *ngIf="files.length === 0" >
   <p>Aucun fichier sélectionné.</p>
 </div>

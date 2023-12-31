@@ -1,0 +1,13 @@
+.li-area{
+
+    justify-content: space-between;
+    display: flex;
+
+}
+.filename{
+    flex: 1;
+}
+.del-btn-area{
+    flex: 1;
+
+}

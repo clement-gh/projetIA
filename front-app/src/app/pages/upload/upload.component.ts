@@ -16,19 +16,25 @@ export class UploadComponent {
   selectedFiles: File[] = [];
 
   constructor(private apiService: ApiService) { }
-
+  uploadButtonDisabled: boolean = true;
+  updateUploadButtonState(): void {
+    this.uploadButtonDisabled = this.selectedFiles.length === 0;
+  }
   
  
   ngAfterViewInit() {
     this.dragAndDropComponent.filesChanged.subscribe((files: File[]) => {
       this.selectedFiles = files; // Mettre à jour selectedFiles lors de l'événement de changement
+      this.updateUploadButtonState(); 
       console.log('Fichiers sélectionnés : ', this.selectedFiles);
 
     });
   }
 
   uploadFile() {
-
+    
+    const confirmUpload = window.confirm('Êtes-vous sûr de vouloir téléverser ces fichiers ?');
+    if (confirmUpload) {
     const formData = new FormData();
     this.selectedFiles.forEach(file => {
       formData.append('image', file); // 'image' doit correspondre au nom attendu par votre backend pour recevoir les fichiers
@@ -43,12 +49,19 @@ export class UploadComponent {
         // Gérez les erreurs ici
         console.error(error);
       });
+    } else {
+      console.log('Téléversement annulé.');
+      // Ajoutez ici des actions à effectuer si l'utilisateur annule le téléversement
+    }
   }
+
+
 
   removeFile(index: number): void {
 
     this.selectedFiles.splice(index, 1); // Supprimer le fichier de selectedFiles
     console.log('Fichiers sélectionnés : ', this.selectedFiles);
+    this.updateUploadButtonState(); 
   }
 }
 /*

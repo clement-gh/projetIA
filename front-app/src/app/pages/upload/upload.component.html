@@ -6,7 +6,7 @@
 <app-file-list [files]="selectedFiles" (fileRemoved)="removeFile($event)"></app-file-list>
 </div>
 <div class="upload-btn-area">
-    <button class="upload-btn" (click)="uploadFile()" [disabled]="selectedFiles.length === 0">Upload</button>
+    <button class="upload-btn" (click)="uploadFile()" [disabled]="uploadButtonDisabled">Upload</button>
   </div>
   <div class="space-area">
 
