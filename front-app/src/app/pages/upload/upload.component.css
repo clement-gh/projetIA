@@ -113,3 +113,25 @@ h3,h4,p{
   .upload-btn:hover:not(:disabled) {
     background-color: #2980b9;
   }
+.area {
+  margin-top: 10px;
+  margin-right: 10px ;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+
+
+}
+.liste-area {
+flex: 1;
+
+}
+.upload-btn-area {
+ margin-top: 20px;
+}
+.space-area {
+  flex: 1;
+}
+

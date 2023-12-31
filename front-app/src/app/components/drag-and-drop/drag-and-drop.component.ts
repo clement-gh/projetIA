@@ -8,7 +8,7 @@ import  { ApiService } from '../../services/api.service';
 })
 export class DragAndDropComponent {
   selectedFiles: File[] = [];
- @Output() filesChanged = new EventEmitter<File[]>();
+  @Output() filesChanged = new EventEmitter<File[]>();
 
   @ViewChild('fileInput') fileInput!: ElementRef;
 
@@ -39,8 +39,7 @@ export class DragAndDropComponent {
   }
 
   uploadFiles() {
-   
-    
+
   }
 
   handleFiles(files: FileList | null) {
@@ -52,12 +51,10 @@ export class DragAndDropComponent {
     }
   }
 
-  
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     const files = input?.files;
     this.handleFiles(files);
-    console.log('Fichiers sélectionnés : ', this.selectedFiles);
   }
 }

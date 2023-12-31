@@ -44,6 +44,12 @@ export class UploadComponent {
         console.error(error);
       });
   }
+
+  removeFile(index: number): void {
+
+    this.selectedFiles.splice(index, 1); // Supprimer le fichier de selectedFiles
+    console.log('Fichiers sélectionnés : ', this.selectedFiles);
+  }
 }
 /*
 

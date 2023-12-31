@@ -1,11 +1,16 @@
 <h1>Page d'upload</h1>
 
 <app-drag-and-drop></app-drag-and-drop>
-
-
-<app-file-list [files]="selectedFiles"></app-file-list>
-
+<div class="area">
+<div class="liste-area">
+<app-file-list [files]="selectedFiles" (fileRemoved)="removeFile($event)"></app-file-list>
+</div>
 <div class="upload-btn-area">
     <button class="upload-btn" (click)="uploadFile()" [disabled]="selectedFiles.length === 0">Upload</button>
-    <button class="upload-btn" (click)="uploadFile()" >Ud</button>
   </div>
+  <div class="space-area">
+
+  
+  </div>
+</div>
+
