@@ -4,6 +4,6 @@ import imageController from '../controllers/imageController';
 const router = express.Router();
 
 router.post('/upload', imageController.uploadImage);
-// Ajoutez d'autres routes selon vos besoins
+    // recuperer une liste d'images envoyés par le client
 
 export default router;
