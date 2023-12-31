@@ -39,11 +39,7 @@ export class DragAndDropComponent {
   }
 
   uploadFiles() {
-    // enveoyer un get à  /hello pour tester
-    this.apiService.get('hello').subscribe(res => {
-      console.log(res);
-    });
-    
+   
     
   }
 

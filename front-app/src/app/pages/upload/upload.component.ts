@@ -28,8 +28,35 @@ export class UploadComponent {
   }
 
   uploadFile() {
-    console.log('uploadFile()');
-    this.apiService.get('hello') // enveoyer un get à  /hello pour tester
-  
+
+    const formData = new FormData();
+    this.selectedFiles.forEach(file => {
+      formData.append('image', file); // 'image' doit correspondre au nom attendu par votre backend pour recevoir les fichiers
+    });
+
+    this.apiService.post('upload', formData)
+      .then((data) => {
+        // Utilisez les données récupérées ici si nécessaire
+        console.log(data);
+      })
+      .catch((error) => {
+        // Gérez les erreurs ici
+        console.error(error);
+      });
   }
 }
+/*
+
+    console.log('hello');
+    this.apiService.get('hello')
+      .then((data) => {
+        // Utilisez les données récupérées ici
+        console.log(data);
+      })
+      .catch((error) => {
+        // Gérez les erreurs ici
+        console.error(error);
+
+      });
+  }
+  */

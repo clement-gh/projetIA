@@ -5,12 +5,19 @@ import helloRoute from './routes/helloRoute'; // Utilisez le nom correct du fich
 import cors from 'cors'; // Importez le module cors
 
 const app = express();
-const port = 3000;
+const corsOptions = {
+  origin:  'http://localhost:4200',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+};
 
+app.use(cors(corsOptions));
 
 
 const PORT = process.env.PORT || 3000;
-app.use(cors());
+
 app.use(bodyParser.json());
 app.use( imageRoutes);
 app.use( helloRoute); 

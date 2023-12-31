@@ -22,10 +22,7 @@ const imageController = {
         const resizedImageBuffer = await sharp(imagePath).resize(300, 200).toBuffer();
 
         // Spécifiez le chemin où vous souhaitez sauvegarder l'image traitée
-        const outputPath = 'uploads/processed_image.jpg';
-
-        // Enregistrez l'image traitée à l'emplacement spécifié
-        fs.writeFileSync(outputPath, resizedImageBuffer);
+    
         fs.renameSync(req.file.path, 'uploads/final_image.jpg');
 
         return res.status(200).json({ message: 'Image uploaded, processed, and saved successfully' });

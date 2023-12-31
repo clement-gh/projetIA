@@ -10,7 +10,7 @@ import { ConnexionComponent } from './pages/connexion/connexion.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UploadDirective } from './directives/upload.directive';
 import { HttpClientModule } from '@angular/common/http'; // Importez HttpClientModule depuis @angular/common/http
-
+import { ApiService } from './services/api.service';
 
 
 import {MatIconModule} from '@angular/material/icon';
@@ -49,7 +49,9 @@ import { FileListComponent } from './components/file-list/file-list.component';
 
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    ApiService
+
   ],
   bootstrap: [AppComponent]
 })

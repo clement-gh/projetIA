@@ -4,7 +4,8 @@ const helloRoute = express.Router();
 
 // Route "Hello, World!"
 helloRoute.get('/hello', (req, res) => {
-  res.status(200).send('Hello, World!');
+  // renvoyer hello world en json
+  res.json('Hello, World!');
   console.log('Hello, World!');
  
 });
