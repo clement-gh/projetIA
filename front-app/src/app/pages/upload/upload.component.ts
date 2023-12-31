@@ -2,6 +2,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { DragAndDropComponent } from '../../components/drag-and-drop/drag-and-drop.component';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-upload',
@@ -14,7 +15,7 @@ export class UploadComponent {
   @ViewChild(DragAndDropComponent) dragAndDropComponent!: DragAndDropComponent;
   selectedFiles: File[] = [];
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   
  
@@ -27,6 +28,8 @@ export class UploadComponent {
   }
 
   uploadFile() {
-    this.dragAndDropComponent.uploadFiles(); // faire la logique ici
+    console.log('uploadFile()');
+    this.apiService.get('hello') // enveoyer un get à  /hello pour tester
+  
   }
 }

@@ -9,6 +9,8 @@ import { UploadComponent } from './pages/upload/upload.component';
 import { ConnexionComponent } from './pages/connexion/connexion.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UploadDirective } from './directives/upload.directive';
+import { HttpClientModule } from '@angular/common/http'; // Importez HttpClientModule depuis @angular/common/http
+
 
 
 import {MatIconModule} from '@angular/material/icon';
@@ -42,7 +44,8 @@ import { FileListComponent } from './components/file-list/file-list.component';
     MatListModule,
     MatButtonModule,
     MatGridListModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    HttpClientModule
 
   ],
   providers: [

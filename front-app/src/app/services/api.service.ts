@@ -1,31 +1,63 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = 'http://localhost:3000/'; // Remplacez ceci par l'URL de votre backend
+  private baseUrl = 'http://localhost:3000'; // Remplacez cette URL par l'URL de votre backend
 
-  constructor(private http: HttpClient) {}
+  constructor() { }
 
-  private handleError(error: any) {
-    console.error('Erreur:', error);
-    return throwError(error);
+  // Exemple de méthode pour effectuer une requête GET
+  get(endpoint: string): Observable<any> {
+    const url = `${this.baseUrl}/${endpoint}`;
+    console.log('url : ', url);
+    return new Observable(observer => {
+      fetch(url)
+        .then(response => {
+          console.log('response : ', response);
+          if (!response.ok) {
+            throw new Error(`Erreur HTTP, statut : ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          observer.next(data);
+          observer.complete();
+        })
+        .catch(error => {
+          observer.error(error);
+        });
+    });
   }
 
-  getData(endpoint: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${endpoint}`).pipe(
-      catchError(this.handleError)
-    );
+  // Exemple de méthode pour effectuer une requête POST
+  post(endpoint: string, data: any): Observable<any> {
+    const url = `${this.baseUrl}/${endpoint}`;
+    return new Observable(observer => {
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Erreur HTTP, statut : ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(result => {
+          observer.next(result);
+          observer.complete();
+        })
+        .catch(error => {
+          observer.error(error);
+        });
+    });
   }
 
-  postData(endpoint: string, data: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(`${this.baseUrl}/${endpoint}`, data, { headers }).pipe(
-      catchError(this.handleError)
-    );
-  }
+  // Ajoutez des méthodes PUT, DELETE, etc. selon vos besoins
 }

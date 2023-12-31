@@ -39,27 +39,12 @@ export class DragAndDropComponent {
   }
 
   uploadFiles() {
-    if (this.selectedFiles.length > 0) {
-      const formData = new FormData();
-
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        formData.append('files', this.selectedFiles[i]);
-      }
-
-      this.apiService.postData('upload', formData).subscribe(
-        (response) => {
-          console.log('Réponse du serveur : ', response);
-          // Réinitialiser les fichiers sélectionnés après l'upload
-          this.selectedFiles = [];
-          // Réinitialiser également le champ de fichier pour permettre un nouvel upload
-          this.fileInput.nativeElement.value = '';
-        },
-        (error) => {
-          console.error('Erreur lors de l\'upload : ', error);
-          // Gérer les erreurs ici
-        }
-      );
-    }
+    // enveoyer un get à  /hello pour tester
+    this.apiService.get('hello').subscribe(res => {
+      console.log(res);
+    });
+    
+    
   }
 
   handleFiles(files: FileList | null) {
