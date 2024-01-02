@@ -25,5 +25,17 @@ export class ApiService {
     });
     return await response.json();
   }
-  // Ajoutez des méthodes PUT, DELETE, etc. selon vos besoins
+
+  async getPdf(fileName: string): Promise<Blob> {
+    const response = await fetch(`${this.baseUrl}/get-pdf`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        // Autres headers si nécessaire
+      }
+    });
+    return await response.blob();
+  }
+
+
 }

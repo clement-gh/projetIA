@@ -1,5 +1,4 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import  { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-drag-and-drop',
@@ -12,7 +11,11 @@ export class DragAndDropComponent {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
 
+<<<<<<< Updated upstream
   constructor() {}
+=======
+  constructor() { }
+>>>>>>> Stashed changes
 
 
   
@@ -52,7 +55,18 @@ export class DragAndDropComponent {
   }
 
   uploadFiles() {
+<<<<<<< Updated upstream
 
+=======
+    if (this.selectedFiles.length > 0) {
+      // Ajoutez ici votre logique pour envoyer les fichiers au serveur
+      console.log('Fichiers à uploader : ', this.selectedFiles);
+      // Réinitialiser les fichiers sélectionnés après l'upload
+      this.selectedFiles = [];
+      // Réinitialiser également le champ de fichier pour permettre un nouvel upload
+      this.fileInput.nativeElement.value = '';
+    }
+>>>>>>> Stashed changes
   }
 
   handleFiles(files: FileList | null) {

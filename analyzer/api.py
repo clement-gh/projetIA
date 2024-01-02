@@ -85,9 +85,9 @@ def upload_image():
 
     if is_last_image:
 # Exécuter la fonction côté serveur lorsque c'est la dernière image
-        return jsonify({'message': 'Dernière image reçue.'})
+        return jsonify({'message': 'Dernière image reçue.'}),200
     else:
-        return jsonify({'message': 'Image reçue.'})
+        return jsonify({'message': 'Image reçue.'}),200
 
 @app.route('/traitement', methods=['POST'])
 def traitement():

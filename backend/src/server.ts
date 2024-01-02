@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import imageRoutes from './routes/imageRoutes';
+import routes from './routes/routes';
 import helloRoute from './routes/helloRoute'; // Utilisez le nom correct du fichier
 import cors from 'cors'; // Importez le module cors
 
@@ -19,8 +19,9 @@ app.use(cors(corsOptions));
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-app.use( imageRoutes);
-app.use( helloRoute); 
+app.use( routes);
+app.use( helloRoute);
+
 
 
 app.listen(PORT, () => {

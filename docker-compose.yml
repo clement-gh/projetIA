@@ -10,9 +10,9 @@ services:
       - "3000:3000"
 
   analyser:
-    image: ia_analyser
+    image: ia_analyzer
     build:
-      context: ./analyser
+      context: ./analyzer
       dockerfile: Dockerfile
   
 
