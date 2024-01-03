@@ -13,7 +13,7 @@ litellm
 matplotlib
 nltk
 numpy
-
+Flask-Cors
 opencv_python
 pandas
 pathlib
@@ -27,7 +27,7 @@ setuptools
 scipy
 scikit-learn
 supervision
-
+thread6
 tensorboard
 
 termcolor
@@ -37,6 +37,7 @@ torchvision
 tqdm
 transformers
 wget
+
 
 pyjwt
 Werkzeug

@@ -46,7 +46,7 @@ URL_SAM_WEIGHTS_HQ = "https://huggingface.co/lkeab/hq-sam/resolve/main/sam_hq_vi
 DEVICE=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 log_format = '%(asctime)s - %(filename)s - %(lineno)d - %(levelname)s - %(message)s'
-logging.basicConfig(filename='./logFile.log', encoding='utf-8', level=logging.DEBUG, format=log_format, filemode='w')
+logging.basicConfig(filename='./logFile.log', level=logging.DEBUG, format=log_format, filemode='w')
 LOGGER = logging.getLogger()
 LOGGER.info('Logger initialized')
 LOGGER.info('Device used : {}'.format(DEVICE))

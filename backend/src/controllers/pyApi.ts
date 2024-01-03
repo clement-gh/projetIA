@@ -1,52 +1,80 @@
 import * as fs from 'fs';
-import fetch from 'node-fetch';
 import FormData from 'form-data';
+import axios, { AxiosResponse } from 'axios';
 
-const URL: string = 'http://localhost:5000/upload-image'; // Remplacez par l'URL de votre serveur
-let MY_TOKEN: string = 'votre_token';
+import dotenv from 'dotenv';
+import path from 'path';
 
-async function uploadImg(imgPaths: string[]): Promise<void> {
-    const headers = {
-        'Authorization': `Bearer ${MY_TOKEN}`,
-    };
+const p = path.resolve(__dirname, '../../.env');
+dotenv.config({ path:  p});
+
+
+// Récupérer la valeur du token d'API à partir de process.env
+const MY_TOKEN = process.env.TOKEN_API;
+
+const URL: string = 'http://localhost:5000'; 
+
+
+interface UploadResponse {
+    success: boolean;
+    message: string;
+    // Autres données de réponse que vous souhaitez renvoyer
+}
+
+export async function uploadImg(imgPaths: string[]): Promise<UploadResponse[]> {
+    const serverUrl: string = `${URL}/upload-image`;
+    const headers: Record<string, string> = { 'Authorization': `Bearer ${MY_TOKEN}` };
+    const responses: UploadResponse[] = [];
 
     for (let index = 0; index < imgPaths.length; index++) {
         const imgPath: string = imgPaths[index];
-        const filename: string = imgPath.split('/').pop() || '';
-        const fileStream: fs.ReadStream = fs.createReadStream(imgPath);
+        const filename: string = imgPath.split('/').pop() || ''; // Récupération du nom de fichier
+
+        const fileData: Buffer = fs.readFileSync(imgPath); // Lecture du fichier
+        const formData: FormData = new FormData();
+        formData.append('image', fileData, { filename });
+
+        // Vérifier si c'est la dernière image
         const isLastImage: boolean = index === imgPaths.length - 1;
 
-        const formData = new FormData();
-        formData.append('image', fileStream, { filename: filename });
-        formData.append('is_last_image', isLastImage.toString());
-
         try {
-            const response = await fetch(`${URL}/upload-image`, {
-                method: 'POST',
-                headers: headers,
-                body: formData,
+            const response: AxiosResponse = await axios.post(serverUrl, formData, {
+                headers,
+                params: { is_last_image: isLastImage },
             });
 
-            if (response.ok) {
-                const responseData = await response.json();
+            const uploadResponse: UploadResponse = {
+                success: response.status === 200,
+                message: response.data.message || '',
+                // Ajoutez d'autres données de réponse ici si nécessaire
+            };
+
+            responses.push(uploadResponse);
+
+            if (uploadResponse.success) {
                 console.log(`Image ${imgPath} envoyée avec succès.`);
-                console.log(responseData);
+                console.log(response.data);
+
                 if (isLastImage) {
-                  //  triggerNewRequest(); // Appel d'une nouvelle fonction après avoir reçu la confirmation du serveur
-                  console.log('Toutes les images ont été envoyées avec succès.');
-                  console.log(responseData);
+                    console.log("Fin de l'envoi des images.");
                 }
             } else {
-                const errorData = await response.text();
                 console.log(`Échec de l'envoi de l'image ${imgPath}.`);
-                console.log(errorData);
+                console.log(response.data);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Erreur lors de l'envoi de l'image ${imgPath}.`, error);
+            const uploadResponse: UploadResponse = {
+                success: false,
+                message: `Erreur lors de l'envoi de l'image ${imgPath}: ${error.message}`,
+                // Autres données de réponse en cas d'erreur
+            };
+            responses.push(uploadResponse);
         }
     }
+
+    return responses;
 }
 
 // Liste des chemins vers les images que vous souhaitez envoyer
-const imagePaths: string[] = ['./DSC1223.jpg', './demo7.jpg', './61.jpg'];
-uploadImg(imagePaths);
+

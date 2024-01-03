@@ -34,7 +34,7 @@ def detect_and_segment(img, text_prompt,b_t_dino=0.3, t_t_dino=0.3):
     
     return annotated_image, segmented_image, detections, phrases
 
-def save_img (img, name):
+def save_img (name, img):
     cv2.imwrite(name, img)
 def clear_img_brut_folder():
     folder = PATH_IMGS

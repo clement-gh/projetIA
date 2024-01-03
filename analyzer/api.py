@@ -56,9 +56,9 @@ def protected():
     return msg
 @app.route('/clearfolder', methods=['POST'])
 def clearfolder():
-    token = request.headers.get('Authorization').split()[1]
-    msg = verify_token(token)
-    if msg.status_code == 401:
+    token  = request.headers.get('Authorization').split()[1]
+    msg,status_code= verify_token(token)
+    if status_code == 401:
         return msg
     else:
         from process import clear_img_brut_folder
@@ -70,9 +70,9 @@ def clearfolder():
 @app.route('/upload-image', methods=['POST'])
 def upload_image():
     token = request.headers.get('Authorization').split()[1]
-    msg = verify_token(token)
-    if msg.status_code == 401:
-        return msg
+    msg,status_code = verify_token(token)
+    if status_code == 401:
+        return msg,status_code
     else:
         uploaded_file = request.files['image']
         is_last_image = request.form.get('is_last_image') == 'True'  # Récupérer le marqueur pour savoir si c'est la dernière image
@@ -81,7 +81,8 @@ def upload_image():
         from const import PATH_IMGS
         from process import save_img
         path =  PATH_IMGS+filename
-        save_img(uploaded_file, path)
+        print(path)
+        uploaded_file.save(path)
 
     if is_last_image:
 # Exécuter la fonction côté serveur lorsque c'est la dernière image
@@ -95,8 +96,8 @@ def traitement():
     if token is None or len(token.split()) != 2 or token.split()[0].lower() != 'bearer':
         return "Token invalide", 401
 
-    msg = verify_token(token.split()[1])
-    if msg.status_code == 401:
+    msg,status_code = verify_token(token.split()[1])
+    if status_code == 401:
         return msg.text, 401
 
     # Démarrer le traitement dans un thread
@@ -124,17 +125,18 @@ def run_traitement():
 
 
 
-def verify_token(token):
+def verify_token(token) :
     try:
         jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
         
         # Vérifier l'expiration du token
+        
 
-        return jsonify({'message': 'Authentification reussie'}), 200
+        return {'message': 'Authentification reussie'}, 200
     except jwt.ExpiredSignatureError:
-        return jsonify({'message': 'Le token a expiré'}), 401
+        return {'message': 'Le token a expiré'}, 401
     except jwt.InvalidTokenError:
-        return jsonify({'message': 'Echec de l\'authentification'}), 401
+        return {'message': 'Echec de l\'authentification'}, 401
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
@@ -142,6 +144,7 @@ if __name__ == '__main__':
             print("Build [ OK ]")
             exit(0)
         else:
+            
             print("Passed argument not supported ! Supported argument : check_syntax")
             exit(1)
-    app.run(debug=True)
+    app.run(debug=True) 
