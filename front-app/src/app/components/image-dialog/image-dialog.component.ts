@@ -8,4 +8,12 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ImageDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: { imageData: string }) { }
+  
+  downloadImage(): void {
+    const link = document.createElement('a');
+    link.href = 'data:image/jpeg;base64,' + this.data.imageData;
+    link.download = 'image.jpg';
+    link.click();
+  }
+  
 }
