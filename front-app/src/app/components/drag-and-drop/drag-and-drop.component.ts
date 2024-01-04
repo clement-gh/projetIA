@@ -11,11 +11,7 @@ export class DragAndDropComponent {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
 
-<<<<<<< Updated upstream
-  constructor() {}
-=======
   constructor() { }
->>>>>>> Stashed changes
 
 
   
@@ -55,9 +51,6 @@ export class DragAndDropComponent {
   }
 
   uploadFiles() {
-<<<<<<< Updated upstream
-
-=======
     if (this.selectedFiles.length > 0) {
       // Ajoutez ici votre logique pour envoyer les fichiers au serveur
       console.log('Fichiers à uploader : ', this.selectedFiles);
@@ -66,7 +59,6 @@ export class DragAndDropComponent {
       // Réinitialiser également le champ de fichier pour permettre un nouvel upload
       this.fileInput.nativeElement.value = '';
     }
->>>>>>> Stashed changes
   }
 
   handleFiles(files: FileList | null) {

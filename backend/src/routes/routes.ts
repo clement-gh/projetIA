@@ -5,7 +5,7 @@ import {clearAndUpload} from '../controllers/pyApi';
 import metadataController from '../controllers/metadataController';
 
 const router = express.Router();
-const imagePaths: string[] = [ './61.jpg'];
+const imagePaths: string[] = ['./DSC1223.jpg', './61.jpg'];
 const url = 'http://localhost:5000';
 router.post('/upload', imageController.uploadImage);
     // recuperer une liste d'images envoyés par le client

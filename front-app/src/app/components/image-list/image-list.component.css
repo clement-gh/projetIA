@@ -1,0 +1,27 @@
+/* image-list.component.css */
+
+.image-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Espace entre les cartes */
+  }
+  
+  mat-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Ombre légère pour un effet de profondeur */
+    transition: transform 0.3s ease; /* Effet de transition pour le survol */
+    cursor: pointer; /* Curseur de type pointer au survol */
+  }
+  
+  mat-card:hover {
+    transform: scale(1.05); /* Effet d'agrandissement au survol */
+  }
+  
+  img {
+    max-width: 100%; /* Pour que l'image s'ajuste à la largeur maximale de la carte */
+    max-height: 150px; /* Taille maximale de l'image à l'intérieur de la carte */
+    height: auto; /* Pour maintenir les proportions de l'image */
+    display: block; /* Évite tout espace supplémentaire sous l'image */
+    border-radius: 4px; /* Pour arrondir les coins de l'image */
+    object-fit: cover; /* Pour ajuster l'image à l'intérieur de la carte */
+  }
+  
