@@ -54,7 +54,8 @@ def clear_img_brut_folder():
 def first_step(img):
     text_prompt = ['person']
     annotated_image, segmented_image, detections, phrases = detect_and_segment(img, text_prompt,b_t_dino=0.4, t_t_dino=0.3)# 0.4, 0.3 pour les personnes pour limiter les faux positifs
-
+    annotated_image = cv2.cvtColor(annotated_image, cv2.COLOR_BGR2RGB)
+    cv2.imwrite('./assets/'+'_annotated.jpg', annotated_image)
     if len(detections) == 0 or detections is None:
         raise ValueError("No detection detected")
     
@@ -153,6 +154,7 @@ def part2(img_original_name :str):
             p_name = filename.split('.')[0]
             tab_names , average_colors_hexa,detections, phrases, annotated_image,segmented_image,croped_bib , text_prompt= step3(img)
             n_dict = step5(tab_names , average_colors_hexa, phrases ,croped_bib, text_prompt, p_name)
+            # save the annotated image
             
             n_dict["imgName"] = img_original_name
             print(n_dict)

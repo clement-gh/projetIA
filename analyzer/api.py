@@ -20,7 +20,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 load_dotenv()
 
 app.config['SECRET_KEY'] = os.getenv("TOKEN_KEY") # Clé secrète pour la création de JWT
-
+app.config['BACKEND_URL'] = os.getenv("BACKEND_URL") # URL du backend
 
 
 
@@ -63,7 +63,7 @@ def clearfolder():
     else:
         from process import clear_img_brut_folder
         msg_return = clear_img_brut_folder()
-        return jsonify({'message': msg_return})
+        return {'message': msg_return}
 
 
 
@@ -75,17 +75,22 @@ def upload_image():
         return msg,status_code
     else:
         uploaded_file = request.files['image']
-        is_last_image = request.form.get('is_last_image') == 'True'  # Récupérer le marqueur pour savoir si c'est la dernière image
+        is_last_image = request.form.get('is_last_image')  # Récupérer le marqueur pour savoir si c'est la dernière image
         filename = secure_filename(uploaded_file.filename)  # Récupérer le nom du fichier
         # Sauvegarder l'image dans le dossier
         from const import PATH_IMGS
         from process import save_img
         path =  PATH_IMGS+filename
         print(path)
+        print (is_last_image)
         uploaded_file.save(path)
 
-    if is_last_image:
-# Exécuter la fonction côté serveur lorsque c'est la dernière image
+    if is_last_image == 'true':
+
+        # Démarrer le traitement dans un thread
+        traitement_thread = threading.Thread(target=run_traitement)
+        traitement_thread.start()
+
         return jsonify({'message': 'Dernière image reçue.'}),200
     else:
         return jsonify({'message': 'Image reçue.'}),200
@@ -108,7 +113,7 @@ def traitement():
     return "Traitement lancé"
 
 def run_traitement():
-    # parcours du dossier brut
+    print("Traitement lancé")
     from const import PATH_IMGS
     for filename in os.listdir(PATH_IMGS):
         print(filename)
@@ -119,9 +124,18 @@ def run_traitement():
             # traitement de l'image
             from process import all_steps
             print("Traitement de l'image : "+path)
-            result= all_steps(path)
+            result= all_steps(path) # result est un json
             print (result)
+            # envoi des données au backend
+            send_metadata_to_backend(result)
     print("Traitement terminé")
+
+def send_metadata_to_backend(data_json):
+    # Envoi des données au backend
+    import requests
+    response = requests.post(app.config['BACKEND_URL']+'/metadata', json=data_json)
+    print(response.text)
+
 
 
 

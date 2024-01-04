@@ -1,0 +1,13 @@
+<!-- image-list.component.html -->
+
+<div *ngIf="images.length > 0">
+    <div *ngFor="let imageData of images">
+      <img [src]="'data:image/jpeg;base64,' + imageData" alt="Image">
+    </div>
+  </div>
+  
+  <div *ngIf="images.length === 0">
+    <p>Aucune image à afficher.</p>
+  </div>
+  
+  

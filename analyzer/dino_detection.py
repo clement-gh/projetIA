@@ -1,3 +1,6 @@
+import sys
+sys.path.append('./GroundingDINO')
+from groundingdino import util 
 from groundingdino.util.inference import load_model, load_image, predict, annotate, Model
 import cv2
 import matplotlib.pyplot as plt

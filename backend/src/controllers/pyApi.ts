@@ -1,29 +1,57 @@
 import * as fs from 'fs';
 import FormData from 'form-data';
-import axios, { AxiosResponse } from 'axios';
-
+import http, { IncomingMessage } from 'http';
+import https from 'https';
 import dotenv from 'dotenv';
 import path from 'path';
-
 const p = path.resolve(__dirname, '../../.env');
 dotenv.config({ path:  p});
 
 
-// Récupérer la valeur du token d'API à partir de process.env
-const MY_TOKEN = process.env.TOKEN_API;
+const TOKEN_API = process.env.TOKEN_API;
 
-const URL: string = 'http://localhost:5000'; 
+interface UploadResponse {
+    success: boolean;
+    message: string;
+    // Autres données de réponse que vous souhaitez renvoyer
 
+
+}
+
+
+export async function clearApiPyFolder(url: string): Promise<void> {
+    const headers = { 'Authorization': `Bearer ${TOKEN_API}` };
+
+    const options = {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const req = http.request(`${url}/clearfolder`, options, (res: IncomingMessage) => {
+
+        res.on('data', (d) => {
+            console.log(d.toString());
+        });
+    });
+
+    req.on('error', (e) => {
+        console.error(e);
+    });
+
+    req.end();
+}
 
 interface UploadResponse {
     success: boolean;
     message: string;
     // Autres données de réponse que vous souhaitez renvoyer
 }
-
-export async function uploadImg(imgPaths: string[]): Promise<UploadResponse[]> {
-    const serverUrl: string = `${URL}/upload-image`;
-    const headers: Record<string, string> = { 'Authorization': `Bearer ${MY_TOKEN}` };
+export async function uploadImg(imgPaths: string[], url: string): Promise<UploadResponse[]> {
+    const serverUrl: string = `${url}/upload-image`;
+    const headers = { 'Authorization': `Bearer ${TOKEN_API}` };
     const responses: UploadResponse[] = [];
 
     for (let index = 0; index < imgPaths.length; index++) {
@@ -36,45 +64,83 @@ export async function uploadImg(imgPaths: string[]): Promise<UploadResponse[]> {
 
         // Vérifier si c'est la dernière image
         const isLastImage: boolean = index === imgPaths.length - 1;
+        console.log(isLastImage)
+        formData.append('is_last_image', isLastImage.toString());
 
-        try {
-            const response: AxiosResponse = await axios.post(serverUrl, formData, {
-                headers,
-                params: { is_last_image: isLastImage },
+        
+        const formHeaders = formData.getHeaders();
+
+        const options = {
+            method: 'POST',
+            headers: {
+                ...headers,
+                ...formHeaders
+            },
+            path: `${serverUrl}?is_last_image=${isLastImage}`
+        };
+
+        const protocol = url.startsWith('https') ? https : http;
+
+        const responsePromise = new Promise<UploadResponse>((resolve, reject) => {
+            const req = protocol.request(url, options, (res: IncomingMessage) => {
+                let data = '';
+
+                res.on('data', (chunk) => {
+                    data += chunk;
+                });
+
+                res.on('end', () => {
+                    const response: UploadResponse = {
+                        success: res.statusCode === 200,
+                        message: data,
+                    };
+
+                    if (response.success) {
+                        console.log(`Image ${imgPath} envoyée avec succès.`);
+                        console.log(data);
+
+                        if (isLastImage) {
+                            console.log("Fin de l'envoi des images.");
+                        }
+                    } else {
+                        console.log(`Échec de l'envoi de l'image ${imgPath}.`);
+                        console.log(data);
+                    }
+
+                    resolve(response);
+                });
             });
 
-            const uploadResponse: UploadResponse = {
-                success: response.status === 200,
-                message: response.data.message || '',
-                // Ajoutez d'autres données de réponse ici si nécessaire
-            };
+            req.on('error', (error) => {
+                console.error(`Erreur lors de l'envoi de l'image ${imgPath}.`, error);
+                const response: UploadResponse = {
+                    success: false,
+                    message: `Erreur lors de l'envoi de l'image ${imgPath}: ${error.message}`,
+                };
+                resolve(response);
+            });
 
+            formData.pipe(req);
+        });
+
+        try {
+            const uploadResponse = await responsePromise;
             responses.push(uploadResponse);
-
-            if (uploadResponse.success) {
-                console.log(`Image ${imgPath} envoyée avec succès.`);
-                console.log(response.data);
-
-                if (isLastImage) {
-                    console.log("Fin de l'envoi des images.");
-                }
-            } else {
-                console.log(`Échec de l'envoi de l'image ${imgPath}.`);
-                console.log(response.data);
-            }
-        } catch (error: any) {
-            console.error(`Erreur lors de l'envoi de l'image ${imgPath}.`, error);
-            const uploadResponse: UploadResponse = {
-                success: false,
-                message: `Erreur lors de l'envoi de l'image ${imgPath}: ${error.message}`,
-                // Autres données de réponse en cas d'erreur
-            };
-            responses.push(uploadResponse);
+        } catch (error) {
+            console.error('Erreur lors de la promesse de réponse :', error);
         }
     }
 
     return responses;
 }
 
-// Liste des chemins vers les images que vous souhaitez envoyer
-
+export async function clearAndUpload(url: string, imgPaths: string[]): Promise<void> {
+    try {
+       
+        await clearApiPyFolder(url);
+       await uploadImg(imgPaths, url);
+        
+    } catch (error) {
+        console.error('Une erreur est survenue :', error);
+    }
+}

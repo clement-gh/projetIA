@@ -22,6 +22,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { DragAndDropComponent } from './components/drag-and-drop/drag-and-drop.component';
 import { FileListComponent } from './components/file-list/file-list.component';
+import { ImageListComponent } from './components/image-list/image-list.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { FileListComponent } from './components/file-list/file-list.component';
     UploadDirective,
     DragAndDropComponent,
     FileListComponent,
+    ImageListComponent,
   
   ],
   imports: [
