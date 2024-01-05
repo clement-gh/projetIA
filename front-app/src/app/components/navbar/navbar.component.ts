@@ -11,7 +11,9 @@ export class NavbarComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      const navbarHeight = this.elRef.nativeElement.offsetHeight;
+      const navbarElement = this.elRef.nativeElement.querySelector('.navbar');
+      const navbarHeight = navbarElement.offsetHeight;
+      console.log('navbarHeight', navbarHeight);
       document.body.style.paddingTop = navbarHeight + 'px';
     }
   }

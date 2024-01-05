@@ -26,6 +26,9 @@ import { ImageListComponent } from './components/image-list/image-list.component
 import { ImageDialogComponent } from './components/image-dialog/image-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog-component/confirmation-dialog.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,10 +42,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FileListComponent,
     ImageListComponent,
     ImageDialogComponent,
+    ConfirmationDialogComponent,
+  
   
   ],
   imports: [
     BrowserModule,
+    MatDialogModule,
     AppRoutingModule,
     MatIconModule,
     MatInputModule,
