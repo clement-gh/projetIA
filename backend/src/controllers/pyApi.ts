@@ -21,7 +21,6 @@ interface UploadResponse {
 
 export async function clearApiPyFolder(url: string): Promise<void> {
     const headers = { 'Authorization': `Bearer ${TOKEN_API}` };
-
     const options = {
         method: 'POST',
         headers: {
@@ -30,18 +29,25 @@ export async function clearApiPyFolder(url: string): Promise<void> {
         }
     };
 
-    const req = http.request(`${url}/clearfolder`, options, (res: IncomingMessage) => {
+    const protocol = url.startsWith('https') ? https : http;
 
-        res.on('data', (d) => {
-            console.log(d.toString());
+    return new Promise<void>((resolve, reject) => {
+        const req = protocol.request(`${url}/clearfolder`, options, (res: IncomingMessage) => {
+            res.on('data', (d) => {
+                console.log(d.toString());
+            });
+            res.on('end', () => {
+                resolve();
+            });
         });
-    });
 
-    req.on('error', (e) => {
-        console.error(e);
-    });
+        req.on('error', (e) => {
+            console.error(e);
+            reject(e);
+        });
 
-    req.end();
+        req.end();
+    });
 }
 
 interface UploadResponse {
@@ -133,14 +139,11 @@ export async function uploadImg(imgPaths: string[], url: string): Promise<Upload
 
     return responses;
 }
-
 export async function clearAndUpload(url: string, imgPaths: string[]): Promise<void> {
     try {
-       
         await clearApiPyFolder(url);
-       await uploadImg(imgPaths, url);
-        
+        await uploadImg(imgPaths, url);
     } catch (error) {
-        console.error('Une erreur est survenue :', error);
+        throw error; // Propager l'erreur pour la capturer dans l'appelant
     }
 }

@@ -2,37 +2,49 @@ import { Request, Response } from 'express';
 import multer from 'multer';
 import sharp from 'sharp';
 import fs from 'fs';
+import {generateRandomString} from '../folderManager';
 
 const imageController = {
- 
   uploadImage: (req: Request, res: Response) => {
-    const upload = multer({ dest: 'uploads/' }).single('image');
+    const upload = multer().any();
 
-    upload(req, res, async (err: any) => {
-      if (err) {
-        console.error('Erreur lors de l\'upload du fichier :', err);
-        return res.status(500).json({ message: 'Erreur lors de l\'upload du fichier' });
-      }
-
-      try {
-        if (!req.file) {
-          return res.status(400).json({ message: 'Aucun fichier n\'a été téléchargé' });
+    return new Promise<string[]>((resolve, reject) => {
+      upload(req, res, async (err: any) => {
+        if (err) {
+          console.error('Erreur lors de l\'upload du fichier :', err);
+          return res.status(500).json({ message: 'Erreur lors de l\'upload du fichier' });
         }
 
-        const imagePath = req.file.path;
-        const resizedImageBuffer = await sharp(imagePath).resize(300, 200).toBuffer();
+        try {
+          const files = req.files as Express.Multer.File[];
+          if (!files || files.length === 0) {
+            return res.status(400).json({ message: 'Aucun fichier n\'a été téléchargé' });
+          }
 
-        // Spécifiez le chemin où vous souhaitez sauvegarder l'image traitée
-    
-        fs.renameSync(req.file.path, 'uploads/final_image.jpg');
+          const processedImagesPromises = files.map(async (file) => {
+            console.log( file)
+            const imagePath = file.path;
+            const resizedImageBuffer = await sharp(file.buffer).resize(300, 200).toBuffer();
+            let name = generateRandomString();
+            //fs.renameSync(file.path, 'uploads/' + name + '.jpg');
+            fs.writeFileSync('uploads/' + name + '.jpg', resizedImageBuffer);
 
-        return res.status(200).json({ message: 'Image uploaded, processed, and saved successfully' });
-      } catch (error) {
-        console.error('Erreur lors du traitement de l\'image :', error);
-        return res.status(500).json({ message: 'Erreur lors du traitement de l\'image' });
-      }
+            return 'uploads/' + name + '.jpg'; // Retourne le chemin de l'image traitée
+          });
+          
+
+          const processedImagePaths = await Promise.all(processedImagesPromises);
+          resolve(processedImagePaths); // Renvoie les chemins des images traitées
+        } catch (error) {
+          console.error('Erreur lors du traitement de l\'image :', error);
+          reject('Erreur lors du traitement de l\'image');
+        }
+      });
     });
   },
+
+
+
   getImages: (req: Request, res: Response, imagePaths: string[]) => {
     try {
       // Vérification si imagePaths est vide ou non défini
