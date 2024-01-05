@@ -36,7 +36,19 @@ def detect_and_segment(img, text_prompt,b_t_dino=0.3, t_t_dino=0.3):
 
 def save_img (name, img):
     cv2.imwrite(name, img)
+    
 def clear_img_brut_folder():
+    folderp = PATH_PERSON
+    for filename in os.listdir(folderp):
+        if filename == '.gitkeep':
+            continue  # Skip deleting .gitkeep file
+        file_path = os.path.join(folderp, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+        except Exception as e:
+            print('Failed to delete %s. Reason: %s' % (file_path, e))
+
     folder = PATH_IMGS
     for filename in os.listdir(folder):
         if filename == '.gitkeep':
@@ -54,8 +66,8 @@ def clear_img_brut_folder():
 def first_step(img):
     text_prompt = ['person']
     annotated_image, segmented_image, detections, phrases = detect_and_segment(img, text_prompt,b_t_dino=0.4, t_t_dino=0.3)# 0.4, 0.3 pour les personnes pour limiter les faux positifs
-    annotated_image = cv2.cvtColor(annotated_image, cv2.COLOR_BGR2RGB)
-    cv2.imwrite('./assets/'+'_annotated.jpg', annotated_image)
+
+    #cv2.imwrite('./assets/'+'_annotated.jpg', annotated_image)
     if len(detections) == 0 or detections is None:
         raise ValueError("No detection detected")
     
