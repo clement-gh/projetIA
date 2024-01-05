@@ -13,3 +13,8 @@ __pycache__/
 **/.env
 Poids/*
 !Poids/.gitkeep
+
+data/persons/*
+!data/persons/.gitkeep
+
+data/imgbrut/*

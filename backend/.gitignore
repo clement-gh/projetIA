@@ -4,6 +4,5 @@
 /dist/
 /dist
 .env
-/data/
-/data
+/uploads
 ```
