@@ -31,28 +31,31 @@ export class UploadComponent {
     });
   }
 
-  uploadFile() {
+  async uploadFile() {
     
     const confirmUpload = window.confirm('Êtes-vous sûr de vouloir téléverser ces fichiers ?');
     if (confirmUpload) {
     const formData = new FormData();
     this.selectedFiles.forEach(file => {
-      formData.append('image', file); // 'image' doit correspondre au nom attendu par votre backend pour recevoir les fichiers
+      formData.append('image', file); 
     });
 
-    this.apiService.post('upload', formData)
-      .then((data) => {
-        // Utilisez les données récupérées ici si nécessaire
-        console.log(data);
-      })
-      .catch((error) => {
-        // Gérez les erreurs ici
-        console.error(error);
-      });
+    try {
+      const data = await this.apiService.post('upload', formData).toPromise();
+      console.log(data);
+      
+      this.selectedFiles = [];
+      this.updateUploadButtonState();
+      this.dragAndDropComponent.clearFiles();
+      alert('Téléversement réussi !');
+    } catch (error) {
+      console.error(error);
+    }
     } else {
       console.log('Téléversement annulé.');
       // Ajoutez ici des actions à effectuer si l'utilisateur annule le téléversement
     }
+  
   }
 
 

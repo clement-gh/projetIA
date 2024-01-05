@@ -50,16 +50,10 @@ export class DragAndDropComponent {
     event.stopPropagation();
   }
 
-  uploadFiles() {
-    if (this.selectedFiles.length > 0) {
-      // Ajoutez ici votre logique pour envoyer les fichiers au serveur
-      console.log('Fichiers à uploader : ', this.selectedFiles);
-      // Réinitialiser les fichiers sélectionnés après l'upload
-      this.selectedFiles = [];
-      // Réinitialiser également le champ de fichier pour permettre un nouvel upload
-      this.fileInput.nativeElement.value = '';
-    }
-  }
+clearFiles() {
+  this.selectedFiles = [];
+  this.filesChanged.emit(this.selectedFiles);
+}
 
   handleFiles(files: FileList | null) {
     if (files) {

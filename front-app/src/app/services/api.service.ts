@@ -10,42 +10,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  async get(endpoint: string): Promise<any> {
-    const response = await fetch(`${this.baseUrl}/${endpoint}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        // Autres headers si nécessaire
-      }
-    });
-    return await response.json();
-  }
-
-  async post(endpoint: string, formData: FormData): Promise<any> {
-    const response = await fetch(`${this.baseUrl}/${endpoint}`, {
-      method: 'POST',
-      body: formData
-    });
-    return await response.json();
-  }
-
-  async getPdf(fileName: string): Promise<Blob> {
-    const response = await fetch(`${this.baseUrl}/get-pdf`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        // Autres headers si nécessaire
-      }
-    });
-    return await response.blob();
-  }
-  getImages(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/images`);
-  }
-
-}
-/**
- *  get(endpoint: string): Observable<any> {
+  get(endpoint: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${endpoint}`);
   }
 
@@ -56,4 +21,8 @@ export class ApiService {
   getPdf(fileName: string): Observable<Blob> {
     return this.http.get(`${this.baseUrl}/get-pdf`, { responseType: 'blob' });
   }
- */
+
+  getImages(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/images`);
+  }
+}
