@@ -52,21 +52,31 @@ export class UploadComponent {
         });
 
         try {
-          const data = this.apiService.post('upload', formData).toPromise();
+          const data = await this.apiService.post('upload', formData).toPromise();
           console.log('data', data);
+          console.log('Téléversement réussi !');
 
           this.selectedFiles = [];
           this.updateUploadButtonState();
           this.dragAndDropComponent.clearFiles();
           alert('Téléversement réussi !');
         } catch (error: any) {
-          console.error(error.error.message);
+          console.error(error);
+          if (error.status===0) {
+            this._snackBar.open(
+              "Le serveur backend n'a pas pu être contacté. Veuillez réessayer plus tard.",
+              'Fermer',{ duration: 2000}
+            );
+            return; 
+          }
           if (error.error.message.code === 'ECONNREFUSED') {
-            this.openSnackBar(
+            this._snackBar.open(
               "Le serveur n'a pas pu se connecter à l'API Python. Veuillez réessayer plus tard.",
-              'Fermer'
+              'Fermer' ,{ duration: 8000}
+              
             );
           }
+          
         }
       }
       else {
