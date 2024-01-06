@@ -1,0 +1,33 @@
+<!-- description-form.component.html -->
+<form (ngSubmit)="submitForm()" #descriptionForm="ngForm">
+    <label for="capDetected">Cap Detected:</label>
+    <input type="checkbox" id="capDetected" name="capDetected" [(ngModel)]="description.cap.detected">
+  
+    <div *ngIf="description.cap.detected">
+        <label for="capColor">Cap Color:</label>
+        <select id="capColor" name="capColor" [(ngModel)]="description.cap.color">
+          <option value="">Choose a color</option>
+          <option *ngFor="let color of colorOptions" [value]="color">{{ color }}</option>
+        </select>
+      </div>
+  
+    <label for="tshirtColor">T-shirt Color:</label>
+    <select id="tshirtColor" name="tshirtColor" [(ngModel)]="description.t_shirt.color">
+      <option value="">Choose a color</option>
+      <option *ngFor="let color of colorOptions" [value]="color">{{ color }}</option>
+    </select>
+
+    <label for="sunglassesDetected">Sunglasses</label>
+    <input type="checkbox" id="sunglassesDetected" name="sunglassesDetected" [(ngModel)]="description.sunglasses.detected">
+  
+    <label for="trousersColor">Trousers Color:</label>
+    <select id="trousersColor" name="trousersColor" [(ngModel)]="description.trousers.color">
+      <option value="">Choose a color</option>
+      <option *ngFor="let color of colorOptions" [value]="color">{{ color }}</option>
+    </select>
+    <label for="number">Number:</label>
+    <input type="text" id="number" name="number" [(ngModel)]="description.numbers.number">
+  
+    <button type="submit" [disabled]="!descriptionForm.valid">Submit</button>
+  </form>
+  

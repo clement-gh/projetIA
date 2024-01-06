@@ -28,6 +28,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog-component/confirmation-dialog.component';
+import { DescriptionFormComponent } from './components/description-form/description-form.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -43,10 +45,12 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog-co
     ImageListComponent,
     ImageDialogComponent,
     ConfirmationDialogComponent,
+    DescriptionFormComponent,
   
   
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     MatDialogModule,
     AppRoutingModule,
