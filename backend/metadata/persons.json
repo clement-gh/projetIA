@@ -1,0 +1,282 @@
+[
+  {
+    "person": "p_0_2664813931",
+    "imgName": "2c830vsveq.jpg",
+    "cap": {
+      "detected": true,
+      "color": "White"
+    },
+    "shirt": {
+      "detected": true,
+      "color": "Grey"
+    },
+    "sunglasses": {
+      "detected": true
+    },
+    "shoe": {
+      "detected": true
+    },
+    "sock": {
+      "detected": true
+    },
+    "backpack": {
+      "detected": true
+    },
+    "sticks": {
+      "detected": true
+    },
+    "number": {
+      "detected": false,
+      "numbers": null
+    },
+    "trousers": {
+      "detected": true,
+      "color": "Black"
+    }
+  },
+  {
+    "person": "p_1_2664813931",
+    "imgName": "2c830vsveq.jpg",
+    "cap": {
+      "detected": true,
+      "color": "Grey"
+    },
+    "shirt": {
+      "detected": true,
+      "color": "Grey"
+    },
+    "sunglasses": {
+      "detected": true
+    },
+    "shoe": {
+      "detected": true
+    },
+    "sock": {
+      "detected": true
+    },
+    "backpack": {
+      "detected": false
+    },
+    "sticks": {
+      "detected": true
+    },
+    "number": {
+      "detected": false,
+      "numbers": null
+    },
+    "trousers": {
+      "detected": true,
+      "color": "Grey"
+    }
+  },
+  {
+    "person": "p_2_2664813931",
+    "imgName": "2c830vsveq.jpg",
+    "cap": {
+      "detected": true,
+      "color": "Pink"
+    },
+    "shirt": {
+      "detected": true,
+      "color": "Red"
+    },
+    "sunglasses": {
+      "detected": true
+    },
+    "shoe": {
+      "detected": true
+    },
+    "sock": {
+      "detected": false
+    },
+    "backpack": {
+      "detected": false
+    },
+    "sticks": {
+      "detected": false
+    },
+    "number": {
+      "detected": false,
+      "numbers": null
+    },
+    "trousers": {
+      "detected": true,
+      "color": "Black"
+    }
+  },
+  {
+    "person": "p_3_2664813931",
+    "imgName": "2c830vsveq.jpg",
+    "cap": {
+      "detected": true,
+      "color": "Yellow"
+    },
+    "shirt": {
+      "detected": true,
+      "color": "Yellow"
+    },
+    "sunglasses": {
+      "detected": true
+    },
+    "shoe": {
+      "detected": true
+    },
+    "sock": {
+      "detected": false
+    },
+    "backpack": {
+      "detected": false
+    },
+    "sticks": {
+      "detected": false
+    },
+    "number": {
+      "detected": true,
+      "numbers": "1002"
+    },
+    "trousers": {
+      "detected": true,
+      "color": "Black"
+    }
+  },
+  {
+    "person": "p_4_2664813931",
+    "imgName": "2c830vsveq.jpg",
+    "cap": {
+      "detected": true,
+      "color": "Grey"
+    },
+    "shirt": {
+      "detected": true,
+      "color": "Black"
+    },
+    "sunglasses": {
+      "detected": true
+    },
+    "shoe": {
+      "detected": true
+    },
+    "sock": {
+      "detected": false
+    },
+    "backpack": {
+      "detected": false
+    },
+    "sticks": {
+      "detected": false
+    },
+    "number": {
+      "detected": true,
+      "numbers": "1744"
+    },
+    "trousers": {
+      "detected": true,
+      "color": "Grey"
+    }
+  },
+  {
+    "person": "p_5_2664813931",
+    "imgName": "2c830vsveq.jpg",
+    "cap": {
+      "detected": true,
+      "color": "Grey"
+    },
+    "shirt": {
+      "detected": true,
+      "color": "Red"
+    },
+    "sunglasses": {
+      "detected": true
+    },
+    "shoe": {
+      "detected": true
+    },
+    "sock": {
+      "detected": true
+    },
+    "backpack": {
+      "detected": false
+    },
+    "sticks": {
+      "detected": false
+    },
+    "number": {
+      "detected": false,
+      "numbers": null
+    },
+    "trousers": {
+      "detected": true,
+      "color": "Black"
+    }
+  },
+  {
+    "person": "p_6_2664813931",
+    "imgName": "2c830vsveq.jpg",
+    "cap": {
+      "detected": true,
+      "color": "Grey"
+    },
+    "shirt": {
+      "detected": true,
+      "color": "Grey"
+    },
+    "sunglasses": {
+      "detected": false
+    },
+    "shoe": {
+      "detected": true
+    },
+    "sock": {
+      "detected": true
+    },
+    "backpack": {
+      "detected": false
+    },
+    "sticks": {
+      "detected": false
+    },
+    "number": {
+      "detected": false,
+      "numbers": null
+    },
+    "trousers": {
+      "detected": true,
+      "color": "Blue"
+    }
+  },
+  {
+    "person": "p_7_2664813931",
+    "imgName": "2c830vsveq.jpg",
+    "cap": {
+      "detected": true,
+      "color": "Orange"
+    },
+    "shirt": {
+      "detected": true,
+      "color": "Grey"
+    },
+    "sunglasses": {
+      "detected": false
+    },
+    "shoe": {
+      "detected": true
+    },
+    "sock": {
+      "detected": true
+    },
+    "backpack": {
+      "detected": false
+    },
+    "sticks": {
+      "detected": false
+    },
+    "number": {
+      "detected": false,
+      "numbers": null
+    },
+    "trousers": {
+      "detected": true,
+      "color": "Red"
+    }
+  }
+]

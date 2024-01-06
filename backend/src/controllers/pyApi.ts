@@ -143,7 +143,8 @@ export async function clearAndUpload(url: string, imgPaths: string[]): Promise<v
     try {
         await clearApiPyFolder(url);
         await uploadImg(imgPaths, url);
+
     } catch (error) {
-        throw error; // Propager l'erreur pour la capturer dans l'appelant
+        throw error; 
     }
 }

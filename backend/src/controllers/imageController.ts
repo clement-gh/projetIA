@@ -24,7 +24,7 @@ const imageController = {
           const processedImagesPromises = files.map(async (file) => {
             console.log( file)
             const imagePath = file.path;
-            const resizedImageBuffer = await sharp(file.buffer).resize(300, 200).toBuffer();
+            const resizedImageBuffer = await sharp(file.buffer).toBuffer();
             let name = generateRandomString();
             //fs.renameSync(file.path, 'uploads/' + name + '.jpg');
             fs.writeFileSync('uploads/' + name + '.jpg', resizedImageBuffer);

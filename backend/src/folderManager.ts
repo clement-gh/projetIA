@@ -31,3 +31,5 @@ export function clearImages( imagePaths: string[]): void {
         }
     });
 }
+
+

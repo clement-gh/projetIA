@@ -18,7 +18,7 @@ router.post("/upload", async (req, res) => {
     // Appeler la fonction clearAndUpload pour vider le dossier et envoyer les images
 
     // Appeler la fonction clearAndUpload pour vider le dossier et envoyer les images
-    await clearAndUpload(url, imagePaths);
+    await clearAndUpload(url, processedImagePaths);
 
     res.status(200).json("Envoi des images terminé avec succès.");
   } catch (error: any) {
@@ -26,7 +26,6 @@ router.post("/upload", async (req, res) => {
       console.error("Erreur de connexion au serveur.");
       console.log()
       clearImages(processedImagePaths);
-      console.log("Images supprimées.");
     }
     res.status(500).json({ message: error });
   }
@@ -62,34 +61,15 @@ router.get("/images", (req, res) => {
   imageController.getImages(req, res, imagePaths);
 });
 
-async function handleImageSending(
-  url: string,
-  imagePaths: string[],
-  res: express.Response
-): Promise<void> {
-  try {
-    await clearAndUpload(url, imagePaths);
-    res
-      .status(200)
-      .json(
-        "Sauvegarde et envoi des images au serveur analyzer terminé avec succès."
-      );
-  } catch (error: any) {
-    if (error.code === "ECONNREFUSED") {
-      console.error("Erreur de connexion au serveur.");
-      res.status(500).json("Erreur de connexion au serveur analyzer.");
-    } else {
-      console.error(
-        "Une erreur est survenue lors de l'envoi des images:",
-        error
-      );
-      res
-        .status(500)
-        .json(
-          "Une erreur est survenue lors de l'envoi des images à l'analyseur."
-        );
-    }
-  }
-}
+// Ajoutez cette route pour gérer l'envoi des descriptions
+router.post("/search", (req, res) => {
+  const descriptionData = req.body; // Les données de description envoyées depuis le front-end
+
+  // Traitez les données de description ici (vous pouvez les envoyer à d'autres fonctions pour le traitement)
+  // Exemple : Vous pouvez utiliser les données pour quelque chose comme l'enregistrement dans une base de données, etc.
+
+  res.status(200).json({ message: 'Descriptions reçues avec succès' });
+});
+
 
 export default router;
