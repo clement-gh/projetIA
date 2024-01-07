@@ -1,0 +1,14 @@
+
+
+
+.img-container {
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    margin: 10px;
+    min-height: 200px;
+    margin: 40px 50px 0px 50px; /* Ordre : haut, droite, bas, gauche */
+
+  }

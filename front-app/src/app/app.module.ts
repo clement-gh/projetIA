@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { SearchComponent } from './pages/search/search.component';
 import { UploadComponent } from './pages/upload/upload.component';
-import { ConnexionComponent } from './pages/connexion/connexion.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UploadDirective } from './directives/upload.directive';
 import { HttpClientModule } from '@angular/common/http'; // Importez HttpClientModule depuis @angular/common/http
@@ -40,7 +39,6 @@ import { ExternalRedirectComponent } from './pages/external-redirect/external-re
     HomeComponent,
     SearchComponent,
     UploadComponent,
-    ConnexionComponent,
     NavbarComponent,
     UploadDirective,
     DragAndDropComponent,

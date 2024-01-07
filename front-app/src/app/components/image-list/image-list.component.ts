@@ -15,6 +15,7 @@ export class ImageListComponent implements OnInit {
   constructor(private apiService: ApiService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    /*
     this.apiService.getImages().subscribe(
       (response: any) => {
         this.images = response.images;
@@ -23,7 +24,7 @@ export class ImageListComponent implements OnInit {
         console.error('Erreur lors de la récupération des images :', error);
         // Gérez l'erreur de récupération des images ici
       }
-    );
+    );*/
   }
 
   openImageDialog(imageData: string): void {

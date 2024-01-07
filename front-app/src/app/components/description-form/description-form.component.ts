@@ -28,23 +28,24 @@ export class DescriptionFormComponent {
 
   constructor(private apiService: ApiService) {}
   
-  colorOptions: string[] = [
-    'Red',
-    'Orange',
-    'Yellow',
-    'Yellow green',
-    'Green',
-    'Blue green',
-    'Cyan',
-    'Blue',
-    'Dark blue',
-    'Purple',
-    'Magenta',
-    'Pink',
-    'White',
-    'Grey',
-    'Black',
-    'Any'
+
+  colorOptions: { name: string; hexCode: string }[] = [
+    { name: 'Red', hexCode: '#FF0000' },
+    { name: 'Orange', hexCode: '#FFA500' },
+    { name: 'Yellow', hexCode: '#FFFF00' },
+    { name: 'Yellow green', hexCode: '#9ACD32' },
+    { name: 'Green', hexCode: '#008000' },
+    { name: 'Blue green', hexCode: '#00fc9d' },
+    { name: 'Cyan', hexCode: '#00FFFF' },
+    { name: 'Blue', hexCode: '#0000FF' },
+    { name: 'Dark blue', hexCode: '#00008B' },
+    { name: 'Purple', hexCode: '#800080' },
+    { name: 'Magenta', hexCode: '#FF00FF' },
+    { name: 'Pink', hexCode: '#FFC0CB' },
+    { name: 'White', hexCode: '#FFFFFF' },
+    { name: 'Grey', hexCode: '#808080' },
+    { name: 'Black', hexCode: '#000000' },
+    { name: 'Any', hexCode: '#FFFFFF' }
   ];
 
 
@@ -52,10 +53,10 @@ export class DescriptionFormComponent {
     // Convertir l'objet Description en FormData
     const formData = new FormData();
     formData.append('capDetected', this.description.cap.detected.toString());
-    formData.append('capColor', this.description.cap.color);
-    formData.append('tshirtColor', this.description.t_shirt.color);
+    formData.append('capColor', this.description.cap.color.toString());
+    formData.append('tshirtColor', this.description.t_shirt.color.toString());
     formData.append('sunglassesDetected', this.description.sunglasses.detected.toString());
-    formData.append('trousersColor', this.description.trousers.color);
+    formData.append('trousersColor', this.description.trousers.color.toString());
     formData.append('number', this.description.numbers.number);
 
     console.log('formData', formData);
