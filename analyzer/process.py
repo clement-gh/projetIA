@@ -65,7 +65,7 @@ def clear_img_brut_folder():
 
 def first_step(img):
     text_prompt = ['person']
-    annotated_image, segmented_image, detections, phrases = detect_and_segment(img, text_prompt,b_t_dino=0.4, t_t_dino=0.3)# 0.4, 0.3 pour les personnes pour limiter les faux positifs
+    annotated_image, segmented_image, detections, phrases = detect_and_segment(img, text_prompt,b_t_dino=0.45, t_t_dino=0.3)# 0.4, 0.3 pour les personnes pour limiter les faux positifs
 
     #cv2.imwrite('./assets/'+'_annotated.jpg', annotated_image)
     if len(detections) == 0 or detections is None:
@@ -136,12 +136,18 @@ def step5 (tab_names , average_colors_hexa, phrases ,croped_bib, text_prompt, p_
         # parcourir les phrases et le dictionnaire
     result_dict = generate_json_person(text_prompt)
     result_dict['person'] = p_name
-
+    print("pharses",phrases)
+    print (" dico result",result_dict)
+    print ("dico color",dict_color)
     for phrase in phrases:
+        
+
         if phrase in result_dict:
             if phrase in ['cap', 'shirt', 'trousers']:
                 #print(dict_color[phrase])
-                result_dict[phrase]['color'] = dict_color[phrase]
+                # ne pas faire si le dico de couleur est vide
+                if dict_color != {}:
+                    result_dict[phrase]['color'] = dict_color[phrase]
                 result_dict[phrase]['detected'] = True
             elif phrase == 'number':
                 result_dict[phrase]['detected'] = True
@@ -170,6 +176,7 @@ def part2(img_original_name :str):
             
             n_dict["imgName"] = img_original_name
             print(n_dict)
+            # ne pas 
             dicts.append(n_dict)
     json_result = []
     for d in dicts:

@@ -30,7 +30,7 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use( routes);
 app.use( helloRoute);
-
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.listen(PORT, () => {

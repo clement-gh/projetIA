@@ -6,6 +6,7 @@
     max-width: 100vw; /* Taille maximale égale à la largeur de la fenêtre */
     max-height: 100vh; /* Taille maximale égale à la hauteur de la fenêtre */
     overflow: hidden; /* Cache toute partie d'image qui dépasse la taille de la fenêtre */
+    overflow-y: scroll;
   }
   
   img {
@@ -14,10 +15,9 @@
   }
   
   .button-container {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: sticky;
+  bottom: 3px;
+    
   }
   
   .custom-button {

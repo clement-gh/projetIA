@@ -1,7 +1,7 @@
-<!-- image-dialog.component.html -->
-
 <div class="image-container">
-  <img [src]="'data:image/jpeg;base64,' + data.imageData" alt="Image">
+  <div class="image-wrapper">
+    <img [src]="'data:image/jpeg;base64,' + data.imageData" alt="Image">
+  </div>
 
   <div class="button-container">
     <button class="custom-button" (click)="downloadImage()">Télécharger</button>

@@ -32,4 +32,13 @@ export function clearImages( imagePaths: string[]): void {
     });
 }
 
+export function deletedDoublons(imagePaths: string[]): string[] {
+    let result: string[] = [];
+    imagePaths.forEach((imagePath) => {
+        if (!result.includes(imagePath)) {
+            result.push(imagePath);
+        }
+    });
+    return result;
+}
 

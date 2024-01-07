@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ImageDataService } from '../../services/imageData.service';
 
 interface Description {
   cap: { detected: boolean; color: string };
@@ -26,7 +27,7 @@ export class DescriptionFormComponent {
     numbers: { number: '' }
   };
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService,private imageDataService: ImageDataService) {}
   
 
   colorOptions: { name: string; hexCode: string }[] = [
@@ -48,27 +49,28 @@ export class DescriptionFormComponent {
     { name: 'Any', hexCode: '#FFFFFF' }
   ];
 
-
   submitForm() {
-    // Convertir l'objet Description en FormData
-    const formData = new FormData();
-    formData.append('capDetected', this.description.cap.detected.toString());
-    formData.append('capColor', this.description.cap.color.toString());
-    formData.append('tshirtColor', this.description.t_shirt.color.toString());
-    formData.append('sunglassesDetected', this.description.sunglasses.detected.toString());
-    formData.append('trousersColor', this.description.trousers.color.toString());
-    formData.append('number', this.description.numbers.number);
-
-    console.log('formData', formData);
-
-    // Envoie de l'objet FormData via le service ApiService
-    this.apiService.post('search', formData)
+    const payload = {
+      capDetected: this.description.cap.detected,
+      capColor: this.description.cap.color,
+      tshirtColor: this.description.t_shirt.color,
+      sunglassesDetected: this.description.sunglasses.detected,
+      trousersColor: this.description.trousers.color,
+      number: this.description.numbers.number
+    };
+  
+    console.log('payload', payload);
+  
+    this.apiService.postPayload('search', payload)
       .subscribe(response => {
         // Traitez la réponse ici si nécessaire
         console.log('Response:', response);
+        const imageUrls: string[] = response.images;
+        this.imageDataService.setImageData(imageUrls);
       }, error => {
         // Gérez les erreurs ici
         console.error('Error:', error);
       });
   }
+  
 }

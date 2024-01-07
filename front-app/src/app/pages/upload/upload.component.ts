@@ -22,11 +22,6 @@ export class UploadComponent {
     private dialogService: DialogService
   ) {}
 
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 0, // Durée d'affichage du Snackbar en millisecondes
-    });
-  }
 
   uploadButtonDisabled: boolean = true;
   updateUploadButtonState(): void {
@@ -54,17 +49,16 @@ export class UploadComponent {
         try {
           const data = await this.apiService.post('upload', formData).toPromise();
           console.log('data', data);
-          console.log('Téléversement réussi !');
 
           this.selectedFiles = [];
           this.updateUploadButtonState();
           this.dragAndDropComponent.clearFiles();
-          alert('Téléversement réussi !');
+          this._snackBar.open("Téléversement réussi !","Fermer",{ duration: 2000});
         } catch (error: any) {
           console.error(error);
           if (error.status===0) {
             this._snackBar.open(
-              "Le serveur backend n'a pas pu être contacté. Veuillez réessayer plus tard.",
+              "Le serveur backend n'a pas pu être contacté.",
               'Fermer',{ duration: 2000}
             );
             return; 

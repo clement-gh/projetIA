@@ -3,6 +3,7 @@ import { ApiService } from '../../services/api.service';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
+import { ImageDataService } from '../../services/imageData.service';
 
 @Component({
   selector: 'app-image-list',
@@ -12,9 +13,13 @@ import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
 export class ImageListComponent implements OnInit {
   images: string[] = []; // Tableau pour stocker les données d'images
 
-  constructor(private apiService: ApiService, private dialog: MatDialog) { }
+  constructor(private apiService: ApiService, private dialog: MatDialog, private imageDataService: ImageDataService) { }
 
   ngOnInit(): void {
+    this.imageDataService.imageData$.subscribe((data: string[]) => {
+      this.images = data;
+    });
+  }
     /*
     this.apiService.getImages().subscribe(
       (response: any) => {
@@ -25,7 +30,7 @@ export class ImageListComponent implements OnInit {
         // Gérez l'erreur de récupération des images ici
       }
     );*/
-  }
+  
 
   openImageDialog(imageData: string): void {
     const dialogRef = this.dialog.open(ImageDialogComponent, {

@@ -4,7 +4,11 @@ import pdfController from "../controllers/pdfController";
 import { clearAndUpload } from "../controllers/pyApi";
 import metadataController from "../controllers/metadataController";
 import { clearImages } from "../folderManager";
+import searchController from "../controllers/searchController";
 import fs from "fs";
+import multer from "multer"; 
+
+
 
 const router = express.Router();
 const imagePaths: string[] = ["./DSC1223.jpg", "./61.jpg"];
@@ -61,15 +65,9 @@ router.get("/images", (req, res) => {
   imageController.getImages(req, res, imagePaths);
 });
 
-// Ajoutez cette route pour gérer l'envoi des descriptions
-router.post("/search", (req, res) => {
-  const descriptionData = req.body; // Les données de description envoyées depuis le front-end
 
-  // Traitez les données de description ici (vous pouvez les envoyer à d'autres fonctions pour le traitement)
-  // Exemple : Vous pouvez utiliser les données pour quelque chose comme l'enregistrement dans une base de données, etc.
+router.post("/search",searchController.search );
 
-  res.status(200).json({ message: 'Descriptions reçues avec succès' });
-});
 
 
 export default router;

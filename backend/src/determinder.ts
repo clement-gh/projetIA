@@ -1,5 +1,6 @@
 import e from "express";
 import { PersonData } from "./controllers/metadataController";
+import { cp } from "fs";
 
 export interface Description {
     cap: { detected: boolean; color: string };
@@ -91,11 +92,14 @@ function compareDescriptions(desc1: Description, desc2: PersonData): number {
         similarity += wheights['t-shirt color'];
     }else if (get_neighbours(desc1.t_shirt.color).includes(desc2.shirt.color)) {
         similarity += wheights['t-shirt neighbor color'];
-    }else {
+    }else if (desc1.t_shirt.color === 'Any' || desc2.shirt.color === '') {
+
+    }else{
         similarity -= wheights['t-shirt color'];
+        }
     }
 
-    }
+    
     // si les lunettes sont détectées
     if (desc1.sunglasses.detected === desc2.sunglasses.detected) {
         similarity += wheights['sunglasses'];
@@ -106,27 +110,37 @@ function compareDescriptions(desc1: Description, desc2: PersonData): number {
         similarity += wheights['trouser color'];
         }else if (get_neighbours(desc1.trousers.color).includes(desc2.trousers.color)) {
         similarity += wheights['trouser neighbor color'];
-        }else {
+        }else if (desc1.trousers.color === 'Any' || desc2.trousers.color === '') {
+            
+        }
+        else{
         similarity -= wheights['trouser color'];
         }
     }
     // sac à dos
-    const nums = generateNumbersWithSequence(desc1.numbers.number.length, desc1.numbers.number);
-    if (desc2.number.detected==true) {
+    const nums = generateNumbersWithSequence(desc1.numbers.number.length, desc2.number.numbers);
+    console.log("name", desc2.person,"nums",nums );
+    if (desc2.number.detected==true && desc2.number.numbers !== '') {
         if( desc1.numbers.number === desc2.number.numbers) {
         similarity = wheights['max']
         }
         
         // convertir les dec1.numbers.number en 
-        else if (nums.includes(desc2.number.numbers)) {
+        else if (nums.includes(desc1.numbers.number)) {
             similarity = wheights['max'] -1;
+            console.log("similarity",similarity, "if", nums);
         }
         else {
-            similarity = 0;
+          
         }
+        }
+    else {
+
 
     }
+    console.log("similarity",similarity, "name", desc2.person);
     const pourcentage = similarity / wheights['max'] * 100;
+    console.log(pourcentage);
     
     return pourcentage;
 
@@ -143,7 +157,7 @@ export function matchingImgs(dec: Description): string[]{
         const element = persons[i];
         if (compareDescriptions(dec, element) > 50) {
              const path= "uploads/"+element.imgName;
-            result.push(element.imgName);
+            result.push(path);
         }
     }
     return result;

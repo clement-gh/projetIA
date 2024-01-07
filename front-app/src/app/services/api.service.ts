@@ -25,4 +25,9 @@ export class ApiService {
   getImages(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/images`);
   }
+
+  postPayload(endpoint: string, payload: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/${endpoint}`, payload);
+  }
+  
 }
