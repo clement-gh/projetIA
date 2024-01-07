@@ -22,7 +22,6 @@ const imageController = {
           }
 
           const processedImagesPromises = files.map(async (file) => {
-            console.log( file)
             const imagePath = file.path;
             const resizedImageBuffer = await sharp(file.buffer).toBuffer();
             let name = generateRandomString();

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -18,10 +18,10 @@ export class ApiService {
     return this.http.post<any>(`${this.baseUrl}/${endpoint}`, formData);
   }
 
-  getPdf(fileName: string): Observable<Blob> {
-    return this.http.get(`${this.baseUrl}/get-pdf`, { responseType: 'blob' });
+  getPdfUrl(pdfFilename: string): Observable<Blob> {
+    const url = `${this.baseUrl}/getpdf/${pdfFilename}`;
+    return this.http.get<Blob>(url);
   }
-
   getImages(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/images`);
   }

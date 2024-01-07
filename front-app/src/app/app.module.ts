@@ -30,6 +30,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog-component/confirmation-dialog.component';
 import { DescriptionFormComponent } from './components/description-form/description-form.component';
 import { FormsModule } from '@angular/forms';
+import { ExternalRedirectComponent } from './pages/external-redirect/external-redirect.component';
+
+
 
 @NgModule({
   declarations: [
@@ -46,6 +49,8 @@ import { FormsModule } from '@angular/forms';
     ImageDialogComponent,
     ConfirmationDialogComponent,
     DescriptionFormComponent,
+    ExternalRedirectComponent,
+
   
   
   ],
@@ -62,7 +67,8 @@ import { FormsModule } from '@angular/forms';
     MatSnackBarModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatCardModule
+    MatCardModule,
+ 
 
   ],
   providers: [

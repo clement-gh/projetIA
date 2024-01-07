@@ -31,7 +31,7 @@ router.post("/upload", async (req, res) => {
   }
 });
 // recuperer une liste d'images envoyés par le front
-router.get("/get-pdf", pdfController.getPdf);
+router.get('/getpdf/:fileName', pdfController.getPdf);
 
 router.post("/sendtoanalizer", async (req, res) => {
   try {
