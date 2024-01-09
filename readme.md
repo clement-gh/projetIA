@@ -34,7 +34,8 @@ en remplacant u et p par respectivement l'username rentré précedement et p le 
 
 
 #### Syntaxe du .env du backend (a placer dans le dossier backend)
+Placer le token entre guillemets simples
 
-TOKEN_API =''
+TOKEN_API = 
 
 FRONTEND_URL =
