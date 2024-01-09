@@ -14,17 +14,26 @@ dotenv.config({ path:  p});
 const front = process.env.FRONTEND_URL;
 
 
+const allowedOrigins = [front, 'http://RunFinderAI.cghys.ovh','https://runfinderai.cghys.ovh']; 
+
 const corsOptions = {
-  origin:  front,
+  origin: function (origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   preflightContinue: false,
   optionsSuccessStatus: 204
 };
 
+
 app.use(cors(corsOptions));
 
-
+app.set('trust proxy', true);
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());

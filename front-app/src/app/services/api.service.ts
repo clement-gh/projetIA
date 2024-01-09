@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = 'http://localhost:3000'; // Remplacez par l'URL de votre backend
+  private baseUrl = 'https://projet-ia.cghys.ovh'; // Remplacez par l'URL de votre backend
 
   constructor(private http: HttpClient) {}
 
@@ -15,6 +15,7 @@ export class ApiService {
   }
 
   post(endpoint: string, formData: FormData): Observable<any> {
+
     return this.http.post<any>(`${this.baseUrl}/${endpoint}`, formData);
   }
 
