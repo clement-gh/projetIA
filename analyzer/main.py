@@ -1,22 +1,12 @@
-import torch
-import supervision as sv
-import os
-import cv2
-
-from setup import *
-from const import *
-from dino_detection import detect_with_dino
-from segment import segment
-import logging
-
+from security import *
 
 if __name__ == '__main__':
-    print (check_available_weights())
-    img_path = 'assets/61.jpg'
-    text_prompt = ['cap', 'shirt', 'sunglasses', 'shoe', 'sock', 'backpack', 'sticks', 'bib', 'trousers']
-    annotated_image, detections, phrases = detect_with_dino(img_path, text_prompt)
+    # entrer un nom d'utilisateur et un mot de passe
+    print("Entrez un nom d'utilisateur et un mot de passe:")
+    username = input("Username: ")
+    password = input("Password: ")
 
-    segmented_image, detections = segment(detections, img_path)
-    # enregistrer les images
-    cv2.imwrite("assets/segmented_image.jpg", segmented_image)
-    
+    # hashage du mot de passe
+    hashed_password = hash_password(password)
+    print("Le mot de passe hashé est: " + hashed_password)
+    print ("dans le .env vous devez mettre le mot de passe hashé")
