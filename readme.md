@@ -38,4 +38,4 @@ Placer le token entre guillemets simples
 
 TOKEN_API = 
 
-FRONTEND_URL =
+FRONTEND_URL = 'http://localhost:4200'
