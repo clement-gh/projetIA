@@ -33,4 +33,8 @@ curl -X POST -H "Content-Type: application/json; charset=utf-8" --data "{\"usern
 en remplacant u et p par respectivement l'username rentré précedement et p le mot de passe hashé.
 
 
+#### Syntaxe du .env du backend (a placer dans le dossier backend)
 
+TOKEN_API =''
+
+FRONTEND_URL =
