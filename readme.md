@@ -1,8 +1,4 @@
-### Commandes pour angular
-
-npm install -g @angular/cli
-
-#### Pour lancé l'app, 
+### Pour lancé l'app, 
 
 Lancer dans 3 terminal différent
 
